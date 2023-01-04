@@ -1,3 +1,14 @@
-@import "./blocks/index";
+// -- Utils
+@import "./utils/index";
 
+// -- Global
 @import "./global/index";
+
+// -- Welcome page (First page)
+@import "./welcome-page/index";
+
+// -- Canvas
+@import "./canvas/index";
+
+// -- Preloader
+@import "./preloader/index";

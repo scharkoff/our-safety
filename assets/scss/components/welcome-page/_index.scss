@@ -1,0 +1,41 @@
+@import "../../colors/index";
+@import "../../mixins/index";
+@import "./media";
+
+
+.welcome {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        background-color: rgba(241, 241, 241, 0.7);
+        border-radius: 50px;
+        padding: 20px;
+
+    }
+    
+    &__title {
+        @include title;
+    }
+
+    &__suptitle {
+        @include suptitle;
+        padding: 0 100px;
+    }
+
+    &-btn {
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    &__btn {
+        @include primary-btn;
+    }
+}

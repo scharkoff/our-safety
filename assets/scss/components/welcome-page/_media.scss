@@ -1,0 +1,25 @@
+@media screen and (max-width: 768px) {
+    .welcome {
+        &__title {
+            font-size: 50px !important;
+        }
+
+        &__suptitle {
+            padding: 0 10px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 420px), screen and (max-height: 420px) {
+    .welcome {
+        &__title {
+            font-size: 26px !important;
+        }
+
+        &__suptitle {
+
+            padding: 0 10px !important;
+        }
+    }
+}
+

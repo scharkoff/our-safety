@@ -5,6 +5,10 @@
   padding: 0 15px;
 }
 
+.hide {
+  opacity: 0;
+}
+
 @font-face {
   font-family: "Roboto";
   font-weight: 900;
@@ -92,11 +96,200 @@
 * {
   padding: 0;
   margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .welcome__title {
+    font-size: 50px !important;
+  }
+  .welcome__suptitle {
+    padding: 0 10px !important;
+  }
+}
+
+@media screen and (max-width: 420px), screen and (max-height: 420px) {
+  .welcome__title {
+    font-size: 26px !important;
+  }
+  .welcome__suptitle {
+    padding: 0 10px !important;
+  }
+}
+
+.welcome {
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.welcome-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  background-color: rgba(241, 241, 241, 0.7);
+  border-radius: 50px;
+  padding: 20px;
+}
+
+.welcome__title {
+  font-size: 72px;
+  font-weight: 900;
+  color: #008cff;
+  margin: 0 0 15px 0;
+}
+
+.welcome__suptitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #383838;
+  padding: 0 100px;
+}
+
+.welcome-btn {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.welcome__btn {
+  color: #fff;
+  background-color: #008cff;
+  border: 1px solid #008cff;
+  font-size: 18px;
+  padding: 10px 15px;
+  cursor: pointer;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+
+.welcome__btn:hover {
+  background-color: inherit;
+  color: #008cff;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  transition: 1s;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  background: -webkit-gradient(linear, left top, right top, from(#008cff), to(#097edd));
+  background: linear-gradient(90deg, #008cff 0%, #097edd 100%);
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  position: relative;
+  animation: loader-ring 1s ease-in-out infinite;
+  -webkit-animation: loader-ring 1s ease-in-out infinite;
+}
+
+.loader::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 13%;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+
+@-webkit-keyframes loader-ring {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-ring {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
 }
 
 @font-face {
