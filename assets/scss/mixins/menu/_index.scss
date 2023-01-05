@@ -1,0 +1,23 @@
+@import "../../colors/index";
+
+
+@mixin menu-item {
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 5px 0;
+    font-size: 16px;
+    color: $primary-color;
+    background-color: inherit;
+    border: 1px solid $primary-color;
+
+    transition: 0.1s linear;
+    -webkit-transition: 0.1s linear;
+    -moz-transition: 0.1s linear;
+    -ms-transition: 0.1s linear;
+    -o-transition: 0.1s linear;
+    
+    &:hover {
+        background-color: $primary-color;
+        color: #fff;
+    }
+}

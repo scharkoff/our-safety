@@ -1,0 +1,59 @@
+@media screen and (max-width: 768px) {
+    .row {
+        --bs-gutter-x: 0 !important;
+    }
+
+    // -- Region
+    .region {
+        &__menu {
+            &-item {
+            font-size: 12px !important;
+            }
+        }
+    }
+
+    // -- Options
+    .options {
+        &__menu {
+            &-item {
+                font-size: 12px !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 420px), screen and (max-height: 420px) {
+
+    .row {
+        --bs-gutter-x: 0 !important;
+    }
+
+
+    // -- Region
+    .region {
+        &__menu {
+            &-item {
+            font-size: 9px !important;
+            }
+
+            &-title {
+                font-size: 10px !important;
+            }
+        }
+
+    }
+
+    // -- Options
+    .options {
+        &__menu {
+            &-item {
+                font-size: 9px !important;
+            }
+
+            &-title {
+                font-size: 10px !important;
+            }
+        }
+    }
+}
+

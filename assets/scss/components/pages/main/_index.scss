@@ -1,0 +1,54 @@
+@import "../../../colors/index";
+@import "../../../mixins/index";
+@import "./media";
+
+
+// -- Main
+.main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__title {
+        margin-bottom: 80px;
+    }
+}
+
+// -- Content
+.content {
+    padding: 0 10px;
+    border-radius: 50px;
+    background-color: rgb(241, 241, 241, 0.9);
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+
+.graph {
+    justify-content: center;
+}
+
+#myChart {
+    padding: 0 4px;
+}
+
+// -- Region
+.region {
+    &__menu {
+        &-item {
+           @include menu-item;
+        }
+    }
+}
+
+// -- Options
+.options {
+    &__menu {
+        &-item {
+            @include menu-item;
+        }
+    }
+}

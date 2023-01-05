@@ -17,7 +17,7 @@
 
     // -- Оптимизация для других устройств
     if (w <= 768 && h <= 1045) { // -- планшет
-        properties.particleCount = 50;
+        properties.particleCount = 40;
     }
 
     if ((w <= 420 && h < 900) || (w <= 900 && h < 420)) { // -- телефон

@@ -13,11 +13,11 @@
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
     .welcome {
         &__title {
-            font-size: 26px !important;
+            font-size: 22px !important;
         }
 
         &__suptitle {
-
+            font-size: 15px !important;
             padding: 0 10px !important;
         }
     }
