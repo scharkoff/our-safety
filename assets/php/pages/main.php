@@ -1,16 +1,11 @@
 <?php 
 
 require("../utils/config.php");
+require("../utils/querys.php");
+require("../utils/stats.php");
 
-// -- All relationships
-$query = mysqli_query($connect, "SELECT * FROM crime_articles");
-$crime_articles = mysqli_fetch_assoc($query);
-
-$query = mysqli_query($connect, "SELECT * FROM committed_crimes");
-$committed_crimes = mysqli_fetch_assoc($query);
-
+// -- Number of victims
 $query = mysqli_query($connect, "SELECT * FROM number_of_victims");
-$number_of_victims = mysqli_fetch_assoc($query);
 
 // -- All regions
 $regions = array();
@@ -25,10 +20,11 @@ $regions = array_unique($regions);
 
 
 
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -50,14 +46,14 @@ $regions = array_unique($regions);
     <div class="container">
         <div class="row content">
 
-            <!-- Титул -->
+            <!-- Title -->
             <div class="row">
                 <div class="col-12 text-center">
                     <h1 class="main__title">Анализ региона</h1>
                 </div>
             </div>
 
-            <!-- Доступные регионы -->
+            <!-- Regions -->
             <div class="row">
                 <div class="col-3 region">
                     <div class="row">
@@ -79,7 +75,7 @@ $regions = array_unique($regions);
                                         if (isset($_GET["option"])) {
                                             echo '<a href="?region='.$link_region.'&option='.$_GET["option"].'"><div class="region__menu-item" data-menu="item">'.$region.'</div></a>';
                                         } else {
-                                            echo '<a href="?region='.$link_region.'&option=percent"><div class="region__menu-item" data-menu="item">'.$region.'</div></a>';
+                                            echo '<a href="?region='.$link_region.'&option=general_statistics"><div class="region__menu-item" data-menu="item">'.$region.'</div></a>';
                                         }
                                     }
                                 }
@@ -89,12 +85,14 @@ $regions = array_unique($regions);
                     </div>
                 </div>
 
-                <!-- График -->
+                <!-- Graph -->
                 <div class="col-6 graph">
-                    <canvas id="myChart" width="600" height="300"></canvas>
+                    <p class="graph__title">Данные за январь-декабрь 2021 г.</p>
+                    <canvas id="quantityChart"></canvas>
+                    <canvas id="percentageChart"></canvas>
                 </div>
 
-                <!-- Настройки графика -->
+                <!-- Options -->
                 <div class="col-3 options">
                     <div class="row">
                         <div class="col-12 text-center">
@@ -103,18 +101,34 @@ $regions = array_unique($regions);
 
                                 <a href=<?php 
                                  if (isset($_GET["region"])) {
-                                    echo "?region=".$_GET["region"]."&option=percent";
+                                    echo "?region=".$_GET["region"]."&option=general_statistics";
                                  } else {
-                                    echo "?option=percent";
+                                    echo "?option=general_statistics";
                                  }
                                 ?>>
                                     <div class=<?php 
-                                         if (isset($_GET["option"]) && ($_GET["option"] == "percent")) {
+                                         if (isset($_GET["option"]) && ($_GET["option"] == "general_statistics")) {
                                             echo "active-item";
                                         } else {
                                             echo "options__menu-item";
                                         }
-                                    ?> data-menu="item">Процент (%)</div>
+                                    ?> data-menu="item">Общая статистика</div>
+                                </a>
+
+                                <a href=<?php 
+                                 if (isset($_GET["region"])) {
+                                    echo "?region=".$_GET["region"]."&option=causes_of_crimes";
+                                 } else {
+                                    echo "?option=causes_of_crimes";
+                                 }
+                                ?>>
+                                    <div class=<?php 
+                                         if (isset($_GET["option"]) && ($_GET["option"] == "causes_of_crimes")) {
+                                            echo "active-item";
+                                        } else {
+                                            echo "options__menu-item";
+                                        }
+                                    ?> data-menu="item">Причины преступлений</div>
                                 </a>
 
                                 <a href=<?php 
@@ -135,18 +149,18 @@ $regions = array_unique($regions);
 
                                 <a href=<?php 
                                  if (isset($_GET["region"])) {
-                                    echo "?region=".$_GET["region"]."&option=affected";
+                                    echo "?region=".$_GET["region"]."&option=victims";
                                  } else {
-                                    echo "?option=affected";
+                                    echo "?option=victims";
                                  }
                                 ?>>
                                     <div class=<?php 
-                                         if (isset($_GET["option"]) && ($_GET["option"] == "affected")) {
+                                         if (isset($_GET["option"]) && ($_GET["option"] == "victims")) {
                                             echo "active-item";
                                         } else {
                                             echo "options__menu-item";
                                         }
-                                    ?> data-menu="item">Пострадавшие</div>
+                                    ?> data-menu="item">Потервпевшие</div>
                                 </a>
                             </div>
                         </div>
@@ -165,12 +179,63 @@ $regions = array_unique($regions);
     <script src="../../js/canvas.js"></script>
     <script src="../../js/preloader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    const ctx = document.querySelector("#myChart").getContext("2d");
 
-    // -- Setup
-    const data = {
-        labels: ["Раз", "Два", "Три", "Четыре", "Раз", "Два", "Три"],
+    <script>
+    // -- Charts
+    const ctxQuantityChart = document.querySelector("#quantityChart").getContext("2d"),
+        ctxPercentageChart = document.querySelector("#percentageChart").getContext("2d");
+
+    <?php  
+
+    // -- General statistics (общая статистика)
+    $count_general_statistics = array();
+
+    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
+        $count_general_statistics = array_merge($count_general_statistics, count_general_statistics($_GET["region"]));
+    }
+    
+
+    // -- Stats of count of number of victims (кол-во потерпевших)
+    $count_number_of_victims = array();
+
+    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
+        $count_number_of_victims = array_merge($count_number_of_victims, count_number_of_victims($_GET["region"]));
+    }
+
+    // -- Stats of causes of crimes (статистика причин приступлений)
+    $count_causes_of_crimes = array();
+
+    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
+        $count_causes_of_crimes = array_merge($count_causes_of_crimes, count_causes_of_crimes($_GET["region"]));
+    }
+
+
+    ?>
+
+    // -- Setup for quantity data
+    const quantityData = {
+        labels: <?php 
+                
+                // -- General statistics (общая статистика)
+                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
+                    echo json_encode(array_keys($count_general_statistics));
+                } 
+                
+                // -- Stats of causes of crimes (статистика причин приступлений)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
+                    echo json_encode(array_keys($count_causes_of_crimes));
+                } 
+                
+                 // -- Stats of count number of victims (кол-во потерпевших)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
+                    echo json_encode(array_keys($count_number_of_victims));
+                } 
+                
+                else {
+                    echo json_encode(["Ничего не выбрано"]);
+                }
+
+            ?>,
         datasets: [{
             label: <?php 
                 if (isset($_GET["region"])) {
@@ -180,11 +245,27 @@ $regions = array_unique($regions);
                 }
             ?>,
             data: <?php 
-                if (isset($_GET["region"])) {
-                    echo json_encode([1, 2, 3, 4, 3, 2, 1]);
-                } else {
+
+                // -- Stats of count number of victims (кол-во потерпевших)
+                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
+                    echo json_encode(array_values($count_number_of_victims));
+                } 
+                
+                // -- Stats of causes of crimes (статистика причин приступлений)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
+                    echo json_encode(array_values($count_causes_of_crimes));
+                } 
+
+                // -- General statistics (общая статистика)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
+                    echo json_encode(array_values($count_general_statistics));
+                }
+                
+                else {
                     echo json_encode([]);
                 }
+
+                
             ?>,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -211,93 +292,23 @@ $regions = array_unique($regions);
     // -- Config
     const config = {
         type: 'bar',
-        data: data,
+        data: quantityData,
         options: {
             scales: {
                 y: {
                     beginAtZero: true
-                }
-            }
+                },
+
+                x: {
+                    display: false,
+                },
+            },
         },
     };
 
-    // -- Pie chart
-    const myChart = new Chart(ctx, config);
-
-    // -- Actions
-    const actions = [{
-            name: 'Randomize',
-            handler(chart) {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.data = Utils.numbers({
-                        count: chart.data.labels.length,
-                        min: 0,
-                        max: 100
-                    });
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'Add Dataset',
-            handler(chart) {
-                const data = chart.data;
-                const newDataset = {
-                    label: 'Dataset ' + (data.datasets.length + 1),
-                    backgroundColor: [],
-                    data: [],
-                };
-
-                for (let i = 0; i < data.labels.length; i++) {
-                    newDataset.data.push(Utils.numbers({
-                        count: 1,
-                        min: 0,
-                        max: 100
-                    }));
-
-                    const colorIndex = i % Object.keys(Utils.CHART_COLORS).length;
-                    newDataset.backgroundColor.push(Object.values(Utils.CHART_COLORS)[colorIndex]);
-                }
-
-                chart.data.datasets.push(newDataset);
-                chart.update();
-            }
-        },
-        {
-            name: 'Add Data',
-            handler(chart) {
-                const data = chart.data;
-                if (data.datasets.length > 0) {
-                    data.labels.push('data #' + (data.labels.length + 1));
-
-                    for (let index = 0; index < data.datasets.length; ++index) {
-                        data.datasets[index].data.push(Utils.rand(0, 100));
-                    }
-
-                    chart.update();
-                }
-            }
-        },
-        {
-            name: 'Remove Dataset',
-            handler(chart) {
-                chart.data.datasets.pop();
-                chart.update();
-            }
-        },
-        {
-            name: 'Remove Data',
-            handler(chart) {
-                chart.data.labels.splice(-1, 1); // remove the label first
-
-                chart.data.datasets.forEach(dataset => {
-                    dataset.data.pop();
-                });
-
-                chart.update();
-            }
-        }
-    ];
+    // -- Upload charts
+    const quantityChart = new Chart(ctxQuantityChart, config);
+    const percentageChart = new Chart(ctxPercentageChart, config);
     </script>
 
 </body>

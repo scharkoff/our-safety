@@ -1,4 +1,5 @@
 @import "../../fonts/roboto/index";
+@import "../../colors/index";
 
 * {
     padding: 0;
@@ -9,6 +10,7 @@
 body {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
+    background-color: $background-color !important;
 }
 
 a {
