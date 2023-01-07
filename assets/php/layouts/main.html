@@ -34,12 +34,19 @@
                     <div class="row">
                         <div class="col-12 text-center region__menu">
                             <div class="region__menu-title">Регионы России</div>
-                            <div class="region__menu-item">Брянская область</div>
-                            <div class="region__menu-item">Брянская область</div>
-                            <div class="region__menu-item">Брянская область</div>
-                            <div class="region__menu-item">Брянская область</div>
-                            <div class="region__menu-item">Брянская область</div>
-                            <div class="region__menu-item">Брянская область</div>
+
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    Dropdown button
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -63,125 +70,128 @@
             </div>
         </div>
     </div>
-</body>
 
-<script src="../../js/canvas.js"></script>
-<script src="../../js/preloader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.querySelector("#myChart").getContext("2d");
 
-    // -- Setup
-    const data = {
-        labels: ["Раз", "Два", "Три", "Четыре", "Раз", "Два", "Три"],
-        datasets: [{
-            label: ['Название области'],
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-        }]
-    };
+    <script src="../../bootstrap-5.0.1-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/canvas.js"></script>
+    <script src="../../js/preloader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.querySelector("#myChart").getContext("2d");
 
-    // -- Config
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
-    };
+        // -- Setup
+        const data = {
+            labels: ["Раз", "Два", "Три", "Четыре", "Раз", "Два", "Три"],
+            datasets: [{
+                label: ['Название области'],
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
 
-    // -- Pie chart
-    const myChart = new Chart(ctx, config);
-
-    // -- Actions
-    const actions = [
-        {
-            name: 'Randomize',
-            handler(chart) {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.data = Utils.numbers({ count: chart.data.labels.length, min: 0, max: 100 });
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'Add Dataset',
-            handler(chart) {
-                const data = chart.data;
-                const newDataset = {
-                    label: 'Dataset ' + (data.datasets.length + 1),
-                    backgroundColor: [],
-                    data: [],
-                };
-
-                for (let i = 0; i < data.labels.length; i++) {
-                    newDataset.data.push(Utils.numbers({ count: 1, min: 0, max: 100 }));
-
-                    const colorIndex = i % Object.keys(Utils.CHART_COLORS).length;
-                    newDataset.backgroundColor.push(Object.values(Utils.CHART_COLORS)[colorIndex]);
-                }
-
-                chart.data.datasets.push(newDataset);
-                chart.update();
-            }
-        },
-        {
-            name: 'Add Data',
-            handler(chart) {
-                const data = chart.data;
-                if (data.datasets.length > 0) {
-                    data.labels.push('data #' + (data.labels.length + 1));
-
-                    for (let index = 0; index < data.datasets.length; ++index) {
-                        data.datasets[index].data.push(Utils.rand(0, 100));
+        // -- Config
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
+                }
+            },
+        };
+
+        // -- Pie chart
+        const myChart = new Chart(ctx, config);
+
+        // -- Actions
+        const actions = [
+            {
+                name: 'Randomize',
+                handler(chart) {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data = Utils.numbers({ count: chart.data.labels.length, min: 0, max: 100 });
+                    });
+                    chart.update();
+                }
+            },
+            {
+                name: 'Add Dataset',
+                handler(chart) {
+                    const data = chart.data;
+                    const newDataset = {
+                        label: 'Dataset ' + (data.datasets.length + 1),
+                        backgroundColor: [],
+                        data: [],
+                    };
+
+                    for (let i = 0; i < data.labels.length; i++) {
+                        newDataset.data.push(Utils.numbers({ count: 1, min: 0, max: 100 }));
+
+                        const colorIndex = i % Object.keys(Utils.CHART_COLORS).length;
+                        newDataset.backgroundColor.push(Object.values(Utils.CHART_COLORS)[colorIndex]);
+                    }
+
+                    chart.data.datasets.push(newDataset);
+                    chart.update();
+                }
+            },
+            {
+                name: 'Add Data',
+                handler(chart) {
+                    const data = chart.data;
+                    if (data.datasets.length > 0) {
+                        data.labels.push('data #' + (data.labels.length + 1));
+
+                        for (let index = 0; index < data.datasets.length; ++index) {
+                            data.datasets[index].data.push(Utils.rand(0, 100));
+                        }
+
+                        chart.update();
+                    }
+                }
+            },
+            {
+                name: 'Remove Dataset',
+                handler(chart) {
+                    chart.data.datasets.pop();
+                    chart.update();
+                }
+            },
+            {
+                name: 'Remove Data',
+                handler(chart) {
+                    chart.data.labels.splice(-1, 1); // remove the label first
+
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data.pop();
+                    });
 
                     chart.update();
                 }
             }
-        },
-        {
-            name: 'Remove Dataset',
-            handler(chart) {
-                chart.data.datasets.pop();
-                chart.update();
-            }
-        },
-        {
-            name: 'Remove Data',
-            handler(chart) {
-                chart.data.labels.splice(-1, 1); // remove the label first
+        ];
+    </script>
 
-                chart.data.datasets.forEach(dataset => {
-                    dataset.data.pop();
-                });
-
-                chart.update();
-            }
-        }
-    ];
-</script>
+</body>
 
 </html>

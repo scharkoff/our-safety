@@ -111,8 +111,11 @@ a {
   .row {
     --bs-gutter-x: 0 !important;
   }
+  .region__menu {
+    max-height: 200px !important;
+  }
   .region__menu-item {
-    font-size: 9px !important;
+    font-size: 10px !important;
   }
   .region__menu-title {
     font-size: 10px !important;
@@ -126,7 +129,7 @@ a {
 }
 .main {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,6 +156,10 @@ a {
   padding: 0 4px;
 }
 
+.region__menu {
+  overflow: auto;
+  max-height: 400px;
+}
 .region__menu-item {
   cursor: pointer;
   margin: 10px 0;
@@ -187,6 +194,16 @@ a {
   -o-transition: 0.1s linear;
 }
 .options__menu-item:hover {
+  background-color: rgb(0, 140, 255);
+  color: #fff;
+}
+
+.active-item {
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 5px 0;
+  font-size: 16px;
+  border: 1px solid rgb(0, 140, 255);
   background-color: rgb(0, 140, 255);
   color: #fff;
 }

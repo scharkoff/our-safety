@@ -32,14 +32,19 @@
                     ситуаций.
                 </p>
                 <div class="welcome-btn">
-                    <a href="./assets/php/pages/main.php" class="welcome__btn">Выбрать регион</a>
+                    <a href="./assets/php/pages/main.php" class="welcome__btn">Выбрать
+                        регион</a>
                 </div>
             </div>
         </div>
     </main>
-</body>
 
-<script src="./assets/js/canvas.js"></script>
-<script src="./assets/js/preloader.js"></script>
+
+
+
+    <script src="./assets/js/canvas.js"></script>
+    <script src="./assets/js/preloader.js"></script>
+
+</body>
 
 </html>
