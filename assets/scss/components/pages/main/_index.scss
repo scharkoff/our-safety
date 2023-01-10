@@ -27,10 +27,6 @@
     -o-border-radius: 50px;
 }
 
-.graph {
-    justify-content: center;
-}
-
 #myChart {
     padding: 0 4px;
 }
@@ -39,6 +35,7 @@
 .region {
     &__menu {
         overflow: auto;
+        overflow-x: hidden;
         max-height: 400px;
 
         &-item {
@@ -49,6 +46,8 @@
 
 // -- Graph 
 .graph {
+    justify-content: center;
+    
     &__title {
         color: $text-color;
         text-align: center;
@@ -60,6 +59,7 @@
 .options {
     &__menu {
         overflow: auto;
+        overflow-x: hidden;
         max-height: 400px;
 
         &-item {

@@ -3,7 +3,7 @@
 require("config.php");
 require("querys.php");
 
-// -- Stats of victims (статистика пострадавших)
+// -- Stats of victims (статистика потерпевших)
 function count_number_of_victims($region) {
     $result = array();
 
@@ -26,6 +26,21 @@ function count_causes_of_crimes($region) {
     global $causes_of_crimes;
 
     while ($row = mysqli_fetch_assoc($causes_of_crimes)) {
+        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
+            $result[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
+        }
+    }
+
+    return $result;
+}
+
+// -- Article violation statistics (статистика нарушений статей)
+function count_article_violation($region) {
+    $result = array();
+
+    global $crime_articles;
+
+    while ($row = mysqli_fetch_assoc($crime_articles)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
             $result[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
         }

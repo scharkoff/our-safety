@@ -21,6 +21,9 @@ $regions = array_unique($regions);
 
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +58,7 @@ $regions = array_unique($regions);
 
             <!-- Regions -->
             <div class="row">
-                <div class="col-3 region">
+                <div class="col-2 region">
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="region__menu-title"><strong>Регионы России</strong></div>
@@ -86,14 +89,14 @@ $regions = array_unique($regions);
                 </div>
 
                 <!-- Graph -->
-                <div class="col-6 graph">
+                <div class="col-8 graph">
                     <p class="graph__title">Данные за январь-декабрь 2021 г.</p>
                     <canvas id="quantityChart"></canvas>
                     <canvas id="percentageChart"></canvas>
                 </div>
 
                 <!-- Options -->
-                <div class="col-3 options">
+                <div class="col-2 options">
                     <div class="row">
                         <div class="col-12 text-center">
                             <div class="options__menu-title"><strong>Доступные опции</strong></div>
@@ -202,6 +205,13 @@ $regions = array_unique($regions);
         $count_number_of_victims = array_merge($count_number_of_victims, count_number_of_victims($_GET["region"]));
     }
 
+    // -- Article violation statistics (статистика нарушений статей)
+    $count_article_violation = array();
+
+    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
+        $count_article_violation = array_merge($count_article_violation, count_article_violation($_GET["region"]));
+    }
+
     // -- Stats of causes of crimes (статистика причин приступлений)
     $count_causes_of_crimes = array();
 
@@ -226,6 +236,21 @@ $regions = array_unique($regions);
                     echo json_encode(array_keys($count_causes_of_crimes));
                 } 
                 
+                // -- Article violation statistics (статистика нарушений статей)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
+                    $keys = array_keys($count_article_violation);
+                    foreach ($keys as $key => $value) {
+                        if (strpos($value, "зарегистрированных")) {
+                            $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "", $value);
+                        }
+
+                        if (strpos($value, "расследованных")) {
+                            $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "", $value);
+                        }
+                    }
+                    echo json_encode($keys);
+                } 
+
                  // -- Stats of count number of victims (кол-во потерпевших)
                 else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
                     echo json_encode(array_keys($count_number_of_victims));
@@ -239,27 +264,35 @@ $regions = array_unique($regions);
         datasets: [{
             label: <?php 
                 if (isset($_GET["region"])) {
-                    echo json_encode($_GET["region"]);
+                    foreach ($regions as $region) {
+                        if (preg_replace('/\s+/', '', $region) == $_GET["region"]) {
+                            echo json_encode($region);
+                        }
+                    }
                 } else {
                     echo json_encode("Регион не выбран");
                 }
             ?>,
-            data: <?php 
-
-                // -- Stats of count number of victims (кол-во потерпевших)
-                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-                    echo json_encode(array_values($count_number_of_victims));
-                } 
+            data: <?php        
+                // -- General statistics (общая статистика)
+                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
+                    echo json_encode(array_values($count_general_statistics));
+                }
                 
                 // -- Stats of causes of crimes (статистика причин приступлений)
                 else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
                     echo json_encode(array_values($count_causes_of_crimes));
                 } 
 
-                // -- General statistics (общая статистика)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-                    echo json_encode(array_values($count_general_statistics));
-                }
+                // -- Article violation statistics (статистика нарушений статей)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
+                    echo json_encode(array_values($count_article_violation));
+                } 
+
+                // -- Stats of count number of victims (кол-во потерпевших)
+                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
+                    echo json_encode(array_values($count_number_of_victims));
+                } 
                 
                 else {
                     echo json_encode([]);
@@ -296,12 +329,17 @@ $regions = array_unique($regions);
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+
                 },
 
                 x: {
                     display: false,
-                },
+                    ticks: {
+                        // maxRotation: 90,
+                        // minRotation: 90,
+                    }
+                }
             },
         },
     };
