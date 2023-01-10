@@ -1,6 +1,14 @@
 @media screen and (max-width: 768px) {
+    .main {
+        margin-top: 0 !important;
+    }
+
     .row {
         --bs-gutter-x: 0 !important;
+    }
+
+    .active-item {
+        font-size: 12px !important;
     }
 
     // -- Region
@@ -23,6 +31,9 @@
 }
 
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
+    .main {
+        margin-top: 0 !important;
+    }
 
     .row {
         --bs-gutter-x: 0 !important;
@@ -38,7 +49,7 @@
         &__menu {
             max-height: 200px !important;
             &-item {
-                font-size: 10px !important;
+                font-size: 9px !important;
             }
 
             &-title {
