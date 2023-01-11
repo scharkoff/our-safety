@@ -40,21 +40,21 @@
                     <p class="datasets__title">Источники на используемые открытые данные:</p>
                     <ul>
                         <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC38"
-                                class="datasets__link">Информация
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC38" class="datasets__link"
+                                target="_blank">Информация
                                 о
                                 зарегистрированных, раскрытых и нераскрытых преступлениях</a>
                         </li>
 
                         <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC310"
-                                class="datasets__link">Информация о
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC310" class="datasets__link"
+                                target="_blank">Информация о
                                 преступлениях, по которым имеются потерпевшие</a>
                         </li>
 
                         <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC33"
-                                class="datasets__link">Информация
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC33" class="datasets__link"
+                                target="_blank">Информация
                                 о
                                 преступности
                             </a>

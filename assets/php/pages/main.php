@@ -223,7 +223,7 @@ $regions = array_unique($regions);
 
     ?>
 
-    // -- Setup for quantity data
+    // -- Setup for quantity chart
     const quantityData = {
         labels: <?php 
                 
@@ -324,7 +324,7 @@ $regions = array_unique($regions);
         }]
     };
 
-    // -- Setup for percentage data
+    // -- Setup for percentage chart
     const percentageData = {
         labels: <?php 
                 
@@ -425,7 +425,7 @@ $regions = array_unique($regions);
         }]
     };
 
-    // -- Quantity config
+    // -- Quantity chart config
     const quantityConfig = {
         type: 'bar',
         data: quantityData,
@@ -447,7 +447,7 @@ $regions = array_unique($regions);
         },
     };
 
-    // -- Percentage config
+    // -- Percentage chart config
     const percentageConfig = {
         type: 'line',
         data: percentageData,

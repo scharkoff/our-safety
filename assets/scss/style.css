@@ -101,52 +101,6 @@ li {
   list-style: none;
 }
 
-@media screen and (max-width: 768px) {
-  .main {
-    margin-top: 0 !important;
-  }
-  .row {
-    --bs-gutter-x: 0 !important;
-  }
-  .active-item {
-    font-size: 12px !important;
-  }
-  .region__menu-item {
-    font-size: 12px !important;
-  }
-  .options__menu-item {
-    font-size: 12px !important;
-  }
-}
-@media screen and (max-width: 420px), screen and (max-height: 420px) {
-  .main {
-    margin-top: 0 !important;
-  }
-  .row {
-    --bs-gutter-x: 0 !important;
-  }
-  .active-item {
-    font-size: 10px !important;
-  }
-  .region__menu {
-    max-height: 200px !important;
-  }
-  .region__menu-item {
-    font-size: 9px !important;
-  }
-  .region__menu-title {
-    font-size: 10px !important;
-  }
-  .graph__title {
-    font-size: 12px;
-  }
-  .options__menu-item {
-    font-size: 9px !important;
-  }
-  .options__menu-title {
-    font-size: 10px !important;
-  }
-}
 .main {
   margin-top: 100px;
   width: 100%;
@@ -241,20 +195,49 @@ li {
 }
 
 @media screen and (max-width: 768px) {
-  .welcome__title {
-    font-size: 50px !important;
+  .main {
+    margin-top: 0;
   }
-  .welcome__suptitle {
-    padding: 0 10px !important;
+  .row {
+    --bs-gutter-x: 0 !important;
+  }
+  .active-item {
+    font-size: 12px;
+  }
+  .region__menu-item {
+    font-size: 12px;
+  }
+  .options__menu-item {
+    font-size: 12px;
   }
 }
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
-  .welcome__title {
-    font-size: 22px !important;
+  .main {
+    margin-top: 0;
   }
-  .welcome__suptitle {
-    font-size: 15px !important;
-    padding: 0 10px !important;
+  .row {
+    --bs-gutter-x: 0 !important;
+  }
+  .active-item {
+    font-size: 10px;
+  }
+  .region__menu {
+    max-height: 200px;
+  }
+  .region__menu-item {
+    font-size: 9px;
+  }
+  .region__menu-title {
+    font-size: 10px;
+  }
+  .graph__title {
+    font-size: 12px;
+  }
+  .options__menu-item {
+    font-size: 9px;
+  }
+  .options__menu-title {
+    font-size: 10px;
   }
 }
 .welcome {
@@ -336,6 +319,23 @@ li {
   bottom: -2px;
 }
 
+@media screen and (max-width: 768px) {
+  .welcome__title {
+    font-size: 50px;
+  }
+  .welcome__suptitle {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 420px), screen and (max-height: 420px) {
+  .welcome__title {
+    font-size: 22px;
+  }
+  .welcome__suptitle {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+}
 .canvas {
   position: absolute;
   top: 0;

@@ -1,6 +1,6 @@
 @media screen and (max-width: 768px) {
     .main {
-        margin-top: 0 !important;
+        margin-top: 0;
     }
 
     .row {
@@ -8,14 +8,14 @@
     }
 
     .active-item {
-        font-size: 12px !important;
+        font-size: 12px;
     }
 
     // -- Region
     .region {
         &__menu {
             &-item {
-            font-size: 12px !important;
+            font-size: 12px;
             }
         }
     }
@@ -24,7 +24,7 @@
     .options {
         &__menu {
             &-item {
-                font-size: 12px !important;
+                font-size: 12px;
             }
         }
     }
@@ -32,7 +32,7 @@
 
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
     .main {
-        margin-top: 0 !important;
+        margin-top: 0;
     }
 
     .row {
@@ -40,20 +40,20 @@
     }
 
     .active-item {
-        font-size: 10px !important;
+        font-size: 10px;
     }
 
 
     // -- Region
     .region {
         &__menu {
-            max-height: 200px !important;
+            max-height: 200px;
             &-item {
-                font-size: 9px !important;
+                font-size: 9px;
             }
 
             &-title {
-                font-size: 10px !important;
+                font-size: 10px;
             }
         }
 
@@ -71,11 +71,11 @@
     .options {
         &__menu {
             &-item {
-                font-size: 9px !important;
+                font-size: 9px;
             }
 
             &-title {
-                font-size: 10px !important;
+                font-size: 10px;
             }
         }
     }

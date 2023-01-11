@@ -1,11 +1,11 @@
 @media screen and (max-width: 768px) {
     .welcome {
         &__title {
-            font-size: 50px !important;
+            font-size: 50px;
         }
 
         &__suptitle {
-            padding: 0 10px !important;
+            padding: 0 10px;
         }
     }
 }
@@ -13,12 +13,12 @@
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
     .welcome {
         &__title {
-            font-size: 22px !important;
+            font-size: 22px;
         }
 
         &__suptitle {
-            font-size: 15px !important;
-            padding: 0 10px !important;
+            font-size: 15px;
+            padding: 0 10px;
         }
     }
 }

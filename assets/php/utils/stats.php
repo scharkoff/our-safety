@@ -5,6 +5,7 @@ require("querys.php");
 
 // -- General statistics (общая статистика)
 // -- # Количество
+
 function count_general_statistics($region) {
     $result = array();
 
