@@ -1,0 +1,27 @@
+@import "../../../colors/index";
+@import "../../../mixins/menu/index";
+
+// -- Main
+.recommends {
+    margin-top: 100px;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+
+    &__title {
+        margin-bottom: 20px;
+    }
+}
+
+.back {
+    @include menu-item;
+    padding: 5px 15px;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+}

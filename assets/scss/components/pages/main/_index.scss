@@ -64,6 +64,29 @@
 
         &-item {
             @include menu-item;
+
+            &-recommends {
+                @include menu-item;
+                border-color: $second-color;
+                color:  $second-color;
+
+                &:hover {
+                    background-color: $second-color;
+                }
+            }
+
+            &-blocked {
+                @include menu-item;
+                border-color: $disable;
+                color: $disable;
+
+
+                &:hover {
+                    background-color: inherit;
+                    color: $disable;
+                }
+            }
+            
         }
     }
 }
@@ -71,4 +94,10 @@
 // -- Active menu item
 .active-item {
     @include menu-active-item;
+}
+
+// -- Blocked link
+.blocked-link {
+    pointer-events: none;
+    cursor: default;
 }

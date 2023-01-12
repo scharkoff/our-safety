@@ -3,19 +3,7 @@
 require("../utils/config.php");
 require("../utils/querys.php");
 require("../utils/stats.php");
-
-// -- Number of victims
-$query = mysqli_query($connect, "SELECT * FROM number_of_victims");
-
-// -- All regions
-$regions = array();
-
-// -- Create variable for regions
-while ($row = mysqli_fetch_assoc($query)) {
-    array_push($regions, $row["subject"]);
-}
-
-$regions = array_unique($regions);
+require("../utils/regions.php");
 
 ?>
 
@@ -83,7 +71,7 @@ $regions = array_unique($regions);
 
                 <!-- Graph -->
                 <div class="col-8 graph">
-                    <p class="graph__title">Данные за январь-декабрь 2021 г.</p>
+                    <p class="graph__title">Данные за январь-июнь 2022 г.</p>
                     <canvas id="quantityChart"></canvas>
                     <canvas id="percentageChart"></canvas>
                 </div>
@@ -158,6 +146,26 @@ $regions = array_unique($regions);
                                         }
                                     ?> data-menu="item">Потервпевшие</div>
                                 </a>
+
+                                <a class=<?php
+                                  if (isset($_GET["region"])) {
+                                    echo "unlock";
+                                 } else {
+                                    echo "blocked-link";
+                                 }
+                                ?> href=<?php 
+                                 if (isset($_GET["region"])) {
+                                    echo "./recommends.php?region=".$_GET["region"];
+                                 }
+                                ?>>
+                                    <div class=<?php 
+                                         if (isset($_GET["region"])) {
+                                            echo "options__menu-item-recommends";
+                                        } else {
+                                            echo "options__menu-item-blocked";
+                                        }
+                                    ?> data-menu="item">Рекомендации</div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -183,6 +191,7 @@ $regions = array_unique($regions);
 
     <?php  
 
+    // -- Charts data (создание данных для графиков):
     // -- General statistics (общая статистика)
     $count_general_statistics = array();
     $count_general_statistics_percent = array();
@@ -191,7 +200,7 @@ $regions = array_unique($regions);
         $count_general_statistics = array_merge($count_general_statistics, count_general_statistics($_GET["region"]));
         $count_general_statistics_percent = array_merge($count_general_statistics_percent, count_general_statistics_percent($_GET["region"]));
     }
-    
+
 
     // -- Article violation statistics (статистика нарушений статей)
     $count_article_violation = array();
@@ -214,16 +223,15 @@ $regions = array_unique($regions);
     // -- Stats of count of number of victims (кол-во потерпевших)
     $count_number_of_victims = array();
     $count_number_of_victims_percent = array();
-    
+
     if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
         $count_number_of_victims = array_merge($count_number_of_victims, count_number_of_victims($_GET["region"]));
         $count_number_of_victims_percent = array_merge($count_number_of_victims_percent, count_number_of_victims_percent($_GET["region"]));
     }
 
-
     ?>
 
-    // -- Setup for quantity chart
+    // -- Setup data for quantity chart
     const quantityData = {
         labels: <?php 
                 
@@ -324,7 +332,7 @@ $regions = array_unique($regions);
         }]
     };
 
-    // -- Setup for percentage chart
+    // -- Setup data for percentage chart
     const percentageData = {
         labels: <?php 
                 
