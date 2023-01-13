@@ -400,6 +400,15 @@ li {
 .recommends__title {
   margin-bottom: 20px;
 }
+.recommends__item {
+  margin: 25px 0;
+}
+.recommends__item:hover {
+  color: rgb(0, 140, 255);
+}
+.recommends__item a {
+  color: #000;
+}
 
 .back {
   cursor: pointer;
@@ -415,11 +424,6 @@ li {
   -ms-transition: 0.1s linear;
   -o-transition: 0.1s linear;
   padding: 5px 15px;
-  border-radius: 30px;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
 }
 .back:hover {
   background-color: rgb(0, 140, 255);

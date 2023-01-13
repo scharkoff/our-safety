@@ -14,14 +14,22 @@
     &__title {
         margin-bottom: 20px;
     }
+
+
+    &__item {
+        margin: 25px 0;
+
+        &:hover {
+            color: $primary-color;
+        }
+    }
+
+    &__item a {
+        color: #000;
+    }
 }
 
 .back {
     @include menu-item;
     padding: 5px 15px;
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    -ms-border-radius: 30px;
-    -o-border-radius: 30px;
 }

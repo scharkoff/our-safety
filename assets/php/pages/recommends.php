@@ -2,9 +2,10 @@
 
 require("../utils/config.php");
 require("../utils/regions.php");
+require("../utils/articles.php");
 
 
-// -- Current region
+// -- Current region (выбранный регион)
 $current_region = "";
 
 if (isset($_GET["region"])) {
@@ -14,6 +15,19 @@ if (isset($_GET["region"])) {
         }
     }
 }
+
+// -- Top articles of the current region (поп статей по выбранному региону)
+$articles_of_region = array();
+if (isset($_GET["region"]))  {
+    $crime_articles = mysqli_query($connect, "SELECT * FROM crime_articles WHERE Subject='".$current_region."'");
+    while($row = mysqli_fetch_assoc($crime_articles)) {
+        $articles_of_region[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
+    }
+}
+
+// -- Top 5 articles (топ 5 статей в регионе)
+arsort($articles_of_region);
+$articles_of_region = array_slice($articles_of_region, 0, 5);
 
 ?>
 
@@ -54,10 +68,23 @@ if (isset($_GET["region"])) {
             <!-- Title -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <h1 class="main__title">Советы и рекомендации</h1>
-                    <p class="main__suptitle"><?php 
-                        echo $current_region;
+                    <h1 class="recommends__title">Советы и рекомендации</h1>
+                    <p class="recommends__suptitle"><?php 
+                        echo "В регионе <b>".$current_region."</b> преобладают следующие нарушения УК РФ (нажмите, чтобы узнать рекомендации):";
                     ?></p>
+                </div>
+                <div class="col-12 text-center">
+                    <ol class="recommends__list">
+                        <?php 
+                        $count = 1;
+                            foreach($articles_of_region as $key => $value) {
+                                echo '<li class="recommends__item">
+                                    <a href="recommends.php?article='.$key.'">'.$count.'. '.$key.'</a>
+                                </li>';
+                                $count++;
+                            }                         
+                        ?>
+                    </ol>
                 </div>
             </div>
 

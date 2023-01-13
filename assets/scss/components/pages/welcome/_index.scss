@@ -45,6 +45,7 @@
     &__link {
         position: relative;
         margin-top: 10px;
+        
         &::after {
             opacity: 0;
             content: "";
@@ -59,7 +60,7 @@
             -moz-transition: 0.1s;
             -ms-transition: 0.1s;
             -o-transition: 0.1s;
-}
+        }
 
         &:hover {
             &::after {
