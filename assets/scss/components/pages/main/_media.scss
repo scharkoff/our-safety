@@ -72,6 +72,14 @@
         &__menu {
             &-item {
                 font-size: 9px;
+
+                &-recommends {
+                    font-size: 9px;
+                }
+
+                &-blocked {
+                    font-size: 9px;
+                }
             }
 
             &-title {

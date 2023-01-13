@@ -9,6 +9,24 @@
   opacity: 0;
 }
 
+.back {
+  color: #fff;
+  background-color: rgb(0, 140, 255);
+  border: 1px solid rgb(0, 140, 255);
+  font-size: 18px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 0.2s linear;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+  -ms-transition: 0.2s linear;
+  -o-transition: 0.2s linear;
+}
+.back:hover {
+  background-color: inherit;
+  color: rgb(0, 140, 255);
+}
+
 @font-face {
   font-family: "Roboto";
   font-weight: 900;
@@ -288,6 +306,12 @@ li {
   .options__menu-item {
     font-size: 9px;
   }
+  .options__menu-item-recommends {
+    font-size: 9px;
+  }
+  .options__menu-item-blocked {
+    font-size: 9px;
+  }
   .options__menu-title {
     font-size: 10px;
   }
@@ -388,8 +412,7 @@ li {
     padding: 0 10px;
   }
 }
-.recommends {
-  margin-top: 100px;
+.articles {
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -397,37 +420,37 @@ li {
   align-items: center;
   margin: 0;
 }
-.recommends__title {
+.articles__list {
+  margin: 0 0 35px 0;
+}
+.articles__title {
   margin-bottom: 20px;
 }
-.recommends__item {
+.articles__item {
   margin: 25px 0;
 }
-.recommends__item:hover {
+.articles__item:hover {
   color: rgb(0, 140, 255);
 }
-.recommends__item a {
+.articles__item a {
   color: #000;
 }
 
-.back {
-  cursor: pointer;
-  margin: 10px 0;
-  padding: 5px 0;
-  font-size: 16px;
-  color: rgb(0, 140, 255);
-  background-color: inherit;
-  border: 1px solid rgb(0, 140, 255);
-  transition: 0.1s linear;
-  -webkit-transition: 0.1s linear;
-  -moz-transition: 0.1s linear;
-  -ms-transition: 0.1s linear;
-  -o-transition: 0.1s linear;
-  padding: 5px 15px;
+.recommends {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
-.back:hover {
-  background-color: rgb(0, 140, 255);
-  color: #fff;
+.recommends__text {
+  line-height: 1.5;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+.recommends__title {
+  margin-bottom: 40px;
 }
 
 .canvas {

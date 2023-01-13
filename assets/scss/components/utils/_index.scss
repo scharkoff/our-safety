@@ -1,3 +1,6 @@
+@import "../../colors/index";
+@import "../../mixins/index";
+
 .wrapper {
     width: 100%;
     max-width: 1440px;
@@ -7,4 +10,8 @@
 
 .hide {
     opacity: 0;
+}
+
+.back {
+    @include primary-btn;
 }

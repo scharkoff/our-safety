@@ -1,0 +1,26 @@
+.recommends {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+
+    &__text {
+        line-height: 1.5;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+
+    &__title {
+        margin-bottom: 40px;
+    }
+}
+
+
+
+
+
+
+
+@import "./media";

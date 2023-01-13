@@ -2,8 +2,6 @@
 
 require("../utils/config.php");
 require("../utils/regions.php");
-require("../utils/articles.php");
-
 
 // -- Current region (выбранный регион)
 $current_region = "";
@@ -26,6 +24,7 @@ if (isset($_GET["region"]))  {
 }
 
 // -- Top 5 articles (топ 5 статей в регионе)
+$articles_of_region = array_slice($articles_of_region, 0, count($articles_of_region)/2);
 arsort($articles_of_region);
 $articles_of_region = array_slice($articles_of_region, 0, 5);
 
@@ -44,7 +43,7 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
     <title>Рекомендации</title>
 </head>
 
-<body class="recommends">
+<body class="articles">
 
     <!-- Preloader -->
     <div class="mask">
@@ -54,37 +53,38 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
     <div class="container">
         <div class="row content">
 
+            <!-- Title -->
             <div class="row">
-                <div class="col-3">
+                <div class="col-12 text-center">
+                    <h1 class="articles__title">Советы и рекомендации</h1>
+                    <p class="articles__suptitle"><?php 
+                        echo "В регионе <b>".$current_region."</b> преобладают следующие нарушения УК РФ (нажмите, чтобы узнать рекомендации):";
+                    ?></p>
+                </div>
+                <div class="col-12 text-center">
+                    <ol class="articles__list">
+                        <?php 
+                        $count = 1;
+                            foreach($articles_of_region as $key => $value) {
+                                $key_link = preg_replace('/\s+/', '', str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "", $key));
+                                echo '<li class="articles__item">
+                                    <a href="article_recommends.php?region='.$_GET["region"].'&article='.$key_link.'">'.$count.'. '.$key.' - <b>'.$value.'</b></a>
+                                </li>';
+                                $count++;
+                            }                         
+                        ?>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
                     <a href=<?php 
                     if (isset($_GET["region"])) {
                         echo "main.php?region=".$_GET["region"]."&option=general_statistics";
                     }
                 
                 ?> class="back">На главную</a>
-                </div>
-            </div>
-
-            <!-- Title -->
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 class="recommends__title">Советы и рекомендации</h1>
-                    <p class="recommends__suptitle"><?php 
-                        echo "В регионе <b>".$current_region."</b> преобладают следующие нарушения УК РФ (нажмите, чтобы узнать рекомендации):";
-                    ?></p>
-                </div>
-                <div class="col-12 text-center">
-                    <ol class="recommends__list">
-                        <?php 
-                        $count = 1;
-                            foreach($articles_of_region as $key => $value) {
-                                echo '<li class="recommends__item">
-                                    <a href="recommends.php?article='.$key.'">'.$count.'. '.$key.'</a>
-                                </li>';
-                                $count++;
-                            }                         
-                        ?>
-                    </ol>
                 </div>
             </div>
 
