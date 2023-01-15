@@ -41,45 +41,49 @@ if (isset($_GET["article"])) {
     <title><?php echo $current_article; ?></title>
 </head>
 
-<body class="recommends">
+<body>
 
     <!-- Preloader -->
     <div class="mask">
         <div class="loader"></div>
     </div>
 
-    <div class="container">
-        <div class="row content">
+    <main class="recommends">
+        <div class="container">
+            <div class="row content">
 
-            <!-- Title -->
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 class="recommends__title"><?php 
+                <!-- Title -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="recommends__title"><?php 
                         echo $current_article;
                     ?></h1>
+                    </div>
+                    <div class="col-12 text-center">
+                        <p class="recommends__text">
+                            <?php echo $articles[$current_article] ?>
+                        </p>
+                    </div>
                 </div>
-                <div class="col-12 text-center">
-                    <p class="recommends__text">
-                        <?php echo $articles[$current_article] ?>
-                    </p>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-12 text-center">
-                    <a href=<?php 
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href=<?php 
                     if (isset($_GET["region"])) {
                         echo "recommends.php?region=".$_GET["region"];
                     }
                 
                 ?> class="back">Вернуться обратно</a>
+                    </div>
                 </div>
+
+                <div class="row">
+                    <?php require("../components/footer.php"); ?>
+                </div>
+
             </div>
-
-
         </div>
-    </div>
-
+    </main>
 
     <script src="../../bootstrap-5.0.1-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"

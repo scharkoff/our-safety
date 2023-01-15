@@ -11,14 +11,14 @@
     <title>НАША БЕЗОПАСНОСТЬ</title>
 </head>
 
-<body class="welcome">
+<body>
 
     <!-- Preloader -->
     <div class="mask">
         <div class="loader"></div>
     </div>
 
-    <main class="welcome-main">
+    <main class="welcome">
         <div class="container">
             <div class="welcome-wrapper">
                 <h1 class="welcome__title">

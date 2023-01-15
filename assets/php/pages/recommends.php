@@ -43,27 +43,28 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
     <title>Рекомендации</title>
 </head>
 
-<body class="articles">
+<body>
 
     <!-- Preloader -->
     <div class="mask">
         <div class="loader"></div>
     </div>
 
-    <div class="container">
-        <div class="row content">
+    <main class="articles">
+        <div class="container">
+            <div class="row content">
 
-            <!-- Title -->
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 class="articles__title">Советы и рекомендации</h1>
-                    <p class="articles__suptitle"><?php 
+                <!-- Title -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="articles__title">Советы и рекомендации</h1>
+                        <p class="articles__suptitle"><?php 
                         echo "В регионе <b>".$current_region."</b> преобладают следующие нарушения УК РФ (нажмите, чтобы узнать рекомендации):";
                     ?></p>
-                </div>
-                <div class="col-12 text-center">
-                    <ol class="articles__list">
-                        <?php 
+                    </div>
+                    <div class="col-12 text-center">
+                        <ol class="articles__list">
+                            <?php 
                         $count = 1;
                             foreach($articles_of_region as $key => $value) {
                                 $key_link = preg_replace('/\s+/', '', str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "", $key));
@@ -73,24 +74,31 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
                                 $count++;
                             }                         
                         ?>
-                    </ol>
+                        </ol>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-12 text-center">
-                    <a href=<?php 
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href=<?php 
                     if (isset($_GET["region"])) {
                         echo "main.php?region=".$_GET["region"]."&option=general_statistics";
                     }
                 
                 ?> class="back">На главную</a>
+                    </div>
                 </div>
+
+                <!-- Footer -->
+                <div class="row">
+                    <?php require("../components/footer.php"); ?>
+                </div>
+
             </div>
 
 
         </div>
-    </div>
+    </main>
 
 
     <script src="../../bootstrap-5.0.1-dist/js/bootstrap.bundle.min.js"></script>

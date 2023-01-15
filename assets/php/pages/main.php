@@ -20,7 +20,7 @@ require("../utils/regions.php");
     <title>Главная страница</title>
 </head>
 
-<body class="main">
+<body>
 
     <!-- Preloader -->
     <div class="mask">

@@ -11,10 +11,19 @@ body {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     background-color: $background-color !important;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 a {
     text-decoration: none !important;
+}
+
+ul, ol {
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 li {
