@@ -16,14 +16,16 @@
     &__item {
         margin: 25px 0;
 
-        &:hover {
-            color: $primary-color;
+        a {
+            color: #000;
+    
+            &:hover {
+                color: $primary-color;
+            }
         }
+
     }
 
-    &__item a {
-        color: #000;
-    }
 }
 
 

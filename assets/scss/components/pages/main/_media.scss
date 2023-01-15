@@ -4,11 +4,7 @@
     }
 
     .row {
-        --bs-gutter-x: 0 !important;
-    }
-
-    .active-item {
-        font-size: 12px;
+        --bs-gutter-x: 0;
     }
 
     // -- Region
@@ -16,6 +12,10 @@
         &__menu {
             &-item {
             font-size: 12px;
+
+            &_active {
+                font-size: 12px;
+            }
             }
         }
     }
@@ -24,7 +24,9 @@
     .options {
         &__menu {
             &-item {
-                font-size: 12px;
+                &_active {
+                    font-size: 12px;
+                }
             }
         }
     }
@@ -36,20 +38,21 @@
     }
 
     .row {
-        --bs-gutter-x: 0 !important;
+        --bs-gutter-x: 0;
     }
-
-    .active-item {
-        font-size: 10px;
-    }
-
 
     // -- Region
     .region {
         &__menu {
             max-height: 200px;
+
             &-item {
                 font-size: 9px;
+                
+                &_active {
+                    font-size: 9px;
+                }
+               
             }
 
             &-title {
@@ -73,11 +76,15 @@
             &-item {
                 font-size: 9px;
 
-                &-recommends {
+                &_active {
                     font-size: 9px;
                 }
 
-                &-blocked {
+                &_recommends {
+                    font-size: 9px;
+                }
+
+                &_blocked {
                     font-size: 9px;
                 }
             }

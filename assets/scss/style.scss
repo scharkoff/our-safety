@@ -1,8 +1,11 @@
+// -- Normalize
+@import "./normalize/index";
+
+// -- Bootstrap5
+@import "../bootstrap-5.0.1-dist/css/bootstrap.rtl.min.css";
+
 // -- Mixins 
 @import "./mixins/index";
-
-// -- Components
-@import "./components/index";
 
 // -- Fonts
 @import "./fonts/roboto/index";
@@ -10,5 +13,5 @@
 // -- Colors
 @import "./colors/index";
 
-// -- Normalize
-@import "./normalize/index";
+// -- Components
+@import "./components/index";

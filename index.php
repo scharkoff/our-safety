@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/scss/style.css">
-    <link rel="stylesheet" href="./assets/bootstrap-5.0.1-dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="./assets/images/icons/shield_var_1.png" type="image/x-icon">
     <title>НАША БЕЗОПАСНОСТЬ</title>
 </head>
@@ -36,24 +35,24 @@
                         регион</a>
                 </div>
 
-                <div class="datasets">
-                    <p class="datasets__title">Источники на используемые открытые данные:</p>
-                    <ul>
-                        <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC38" class="datasets__link"
+                <div class="welcome-datasets">
+                    <p class="welcome-datasets__title">Источники на используемые открытые данные:</p>
+                    <ul class="welcome-dataset__menu">
+                        <li class="welcome-datasets__menu-item">
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC38"
                                 target="_blank">Информация
                                 о
                                 зарегистрированных, раскрытых и нераскрытых преступлениях</a>
                         </li>
 
-                        <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC310" class="datasets__link"
+                        <li class="welcome-datasets__menu-item">
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC310"
                                 target="_blank">Информация о
                                 преступлениях, по которым имеются потерпевшие</a>
                         </li>
 
-                        <li>
-                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC33" class="datasets__link"
+                        <li class="welcome-datasets__menu-item">
+                            <a href="https://xn--b1aew.xn--p1ai/opendata/7727739372-MVDGIAC33"
                                 target="_blank">Информация
                                 о
                                 преступности

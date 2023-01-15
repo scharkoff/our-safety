@@ -33,6 +33,10 @@
 
         &-item {
            @include menu-item;
+
+           &_active {
+            @include menu-active-item;
+           }
         }
     }
 }
@@ -44,7 +48,8 @@
     &__title {
         color: $text-color;
         text-align: center;
-        font-weight: 100;
+        font-weight: 300;
+        font-size: 14px;
     }
 }
 
@@ -58,7 +63,7 @@
         &-item {
             @include menu-item;
 
-            &-recommends {
+            &_recommends {
                 @include menu-item;
                 border-color: $second-color;
                 color:  $second-color;
@@ -68,7 +73,7 @@
                 }
             }
 
-            &-blocked {
+            &_blocked {
                 @include menu-item;
                 border-color: $disable;
                 color: $disable;
@@ -79,14 +84,13 @@
                     color: $disable;
                 }
             }
+
+            &_active {
+                @include menu-active-item;
+            }
             
         }
     }
-}
-
-// -- Active menu item
-.active-item {
-    @include menu-active-item;
 }
 
 // -- Blocked link

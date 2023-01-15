@@ -39,7 +39,6 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../scss/style.css">
     <link rel="shortcut icon" href="../../images/icons/shield_var_1.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../bootstrap-5.0.1-dist/css/bootstrap.min.css">
     <title>Рекомендации</title>
 </head>
 
