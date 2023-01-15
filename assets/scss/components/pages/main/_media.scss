@@ -1,98 +1,99 @@
 @media screen and (max-width: 768px) {
-    .main {
-        margin-top: 0;
+
+    .analysis {
+
+        // -- Region
+        &__region {
+            margin-top: 0;
+
+            &-menu {
+                &-item {
+                font-size: 12px;
+
+                    &_active {
+                    font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        // -- Options
+        &__options {
+            &-menu {
+                &-item {
+                    &_active {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    
     }
 
     .row {
         --bs-gutter-x: 0;
-    }
-
-    // -- Region
-    .region {
-        &__menu {
-            &-item {
-            font-size: 12px;
-
-            &_active {
-                font-size: 12px;
-            }
-            }
-        }
-    }
-
-    // -- Options
-    .options {
-        &__menu {
-            &-item {
-                &_active {
-                    font-size: 12px;
-                }
-            }
-        }
     }
 }
 
 @media screen and (max-width: 420px), screen and (max-height: 420px) {
-    .main {
-        margin-top: 0;
-    }
 
+    .analysis {
+
+        // -- Region
+        &__region {
+            &-title {
+                font-size: 10px;
+            }
+
+            &-menu {
+                max-height: 200px;
+
+                &-item {
+                    font-size: 9px;
+
+                    &_active {
+                        font-size: 9px;
+                    }
+                
+                }
+            }
+        }
+        // -- Graph 
+        &__graph {
+            &-title {
+                font-size: 12px;
+            }
+        }
+
+        // -- Options
+        &__options {
+            &-title {
+                font-size: 10px;
+            }
+
+            &-menu {
+                
+                &-item {
+                    font-size: 9px;
+
+                    &_active {
+                        font-size: 9px;
+                    }
+
+                    &_recommends {
+                        font-size: 9px;
+                    }
+
+                    &_blocked {
+                        font-size: 9px;
+                    }
+                }
+            }
+        }
+    }
     .row {
         --bs-gutter-x: 0;
     }
-
-    // -- Region
-    .region {
-        &__menu {
-            max-height: 200px;
-
-            &-item {
-                font-size: 9px;
-                
-                &_active {
-                    font-size: 9px;
-                }
-               
-            }
-
-            &-title {
-                font-size: 10px;
-            }
-        }
-
-    }
-
     
-    // -- Graph 
-    .graph {
-        &__title {
-            font-size: 12px;
-        }
-    }
-
-    // -- Options
-    .options {
-        &__menu {
-            &-item {
-                font-size: 9px;
-
-                &_active {
-                    font-size: 9px;
-                }
-
-                &_recommends {
-                    font-size: 9px;
-                }
-
-                &_blocked {
-                    font-size: 9px;
-                }
-            }
-
-            &-title {
-                font-size: 10px;
-            }
-        }
-    }
 }
 

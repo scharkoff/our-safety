@@ -20,7 +20,7 @@ require("../utils/regions.php");
 </head>
 
 <body>
-    <main class="main">
+    <main class="analysis">
 
         <!-- Preloader -->
         <div class="mask">
@@ -28,22 +28,22 @@ require("../utils/regions.php");
         </div>
 
         <div class="container">
-            <div class="row content">
+            <div class="row analysis__content">
 
                 <!-- Title -->
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h1 class="main__title">Анализ региона</h1>
+                        <h1 class="analysis__title">Анализ региона</h1>
                     </div>
                 </div>
 
                 <!-- Regions -->
                 <div class="row">
-                    <div class="col-2 region">
-                        <div class="row">
+                    <div class="col-2">
+                        <div class="row analysis__region">
                             <div class="col-12 text-center">
-                                <div class="region__menu-title"><strong>Регионы России</strong></div>
-                                <div class="region__menu">
+                                <div class="analysis__region-title"><strong>Регионы России</strong></div>
+                                <div class="analysis__region-menu">
                                     <?php 
                                 sort($regions);
                                 foreach ($regions as $region) {
@@ -51,15 +51,15 @@ require("../utils/regions.php");
                                     
                                     if (isset($_GET["region"]) && (preg_replace('/\s+/', '', $_GET["region"]) == $link_region)) {
                                         if (isset($_GET["option"])) {
-                                            echo '<a href="?region='.$link_region.'&option='.$_GET["option"].'"><div class="region__menu-item_active" data-menu="item">'.$region.'</div></a>';
+                                            echo '<a href="?region='.$link_region.'&option='.$_GET["option"].'"><div class="analysis__region-menu-item_active" data-menu="item">'.$region.'</div></a>';
                                         } else {
-                                            echo '<a href="?region='.$link_region.'"><div class="region__menu-item_active" data-menu="item">'.$region.'</div></a>';
+                                            echo '<a href="?region='.$link_region.'"><div class="analysis__region-menu-item_active" data-menu="item">'.$region.'</div></a>';
                                         }
                                     } else {
                                         if (isset($_GET["option"])) {
-                                            echo '<a href="?region='.$link_region.'&option='.$_GET["option"].'"><div class="region__menu-item" data-menu="item">'.$region.'</div></a>';
+                                            echo '<a href="?region='.$link_region.'&option='.$_GET["option"].'"><div class="analysis__region-menu-item" data-menu="item">'.$region.'</div></a>';
                                         } else {
-                                            echo '<a href="?region='.$link_region.'&option=general_statistics"><div class="region__menu-item" data-menu="item">'.$region.'</div></a>';
+                                            echo '<a href="?region='.$link_region.'&option=general_statistics"><div class="analysis__region-menu-item" data-menu="item">'.$region.'</div></a>';
                                         }
                                     }
                                 }
@@ -70,18 +70,18 @@ require("../utils/regions.php");
                     </div>
 
                     <!-- Graph -->
-                    <div class="col-8 graph">
-                        <p class="graph__title">Данные за январь-июнь 2022 г.</p>
+                    <div class="col-8 analysis__graph">
+                        <p class="analysis__graph-title">Данные за январь-июнь 2022 г.</p>
                         <canvas id="quantityChart"></canvas>
                         <canvas id="percentageChart"></canvas>
                     </div>
 
                     <!-- Options -->
-                    <div class="col-2 options">
+                    <div class="col-2 analysis__options">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <div class="options__menu-title"><strong>Доступные опции</strong></div>
-                                <div class="options__menu">
+                                <div class="analysis__options-title"><strong>Доступные опции</strong></div>
+                                <div class="analysis__options-menu">
 
                                     <a href=<?php 
                                  if (isset($_GET["region"])) {
@@ -92,9 +92,9 @@ require("../utils/regions.php");
                                 ?>>
                                         <div class=<?php 
                                          if (isset($_GET["option"]) && ($_GET["option"] == "general_statistics")) {
-                                            echo "options__menu-item_active";
+                                            echo "analysis__options-menu-item_active";
                                         } else {
-                                            echo "options__menu-item";
+                                            echo "analysis__options-menu-item";
                                         }
                                     ?> data-menu="item">Общая статистика</div>
                                     </a>
@@ -108,9 +108,9 @@ require("../utils/regions.php");
                                 ?>>
                                         <div class=<?php 
                                          if (isset($_GET["option"]) && ($_GET["option"] == "causes_of_crimes")) {
-                                            echo "options__menu-item_active";
+                                            echo "analysis__options-menu-item_active";
                                         } else {
-                                            echo "options__menu-item";
+                                            echo "analysis__options-menu-item";
                                         }
                                     ?> data-menu="item">Причины преступлений</div>
                                     </a>
@@ -124,9 +124,9 @@ require("../utils/regions.php");
                                 ?>>
                                         <div class=<?php 
                                          if (isset($_GET["option"]) && ($_GET["option"] == "articles")) {
-                                            echo "options__menu-item_active";
+                                            echo "analysis__options-menu-item_active";
                                         } else {
-                                            echo "options__menu-item";
+                                            echo "analysis__options-menu-item";
                                         }
                                     ?> data-menu="item">Статьи преступлений</div>
                                     </a>
@@ -140,9 +140,9 @@ require("../utils/regions.php");
                                         ?>>
                                         <div class=<?php 
                                          if (isset($_GET["option"]) && ($_GET["option"] == "victims")) {
-                                            echo "options__menu-item_active";
+                                            echo "analysis__options-menu-item_active";
                                         } else {
-                                            echo "options__menu-item";
+                                            echo "analysis__options-menu-item";
                                         }
                                         ?> data-menu="item">Потервпевшие</div>
                                     </a>
@@ -162,9 +162,9 @@ require("../utils/regions.php");
                                         ?>>
                                         <div class=<?php 
                                          if (isset($_GET["region"])) {
-                                            echo "options__menu-item_recommends";
+                                            echo "analysis__options-menu-item_recommends";
                                         } else {
-                                            echo "options__menu-item_blocked";
+                                            echo "analysis__options-menu-item_blocked";
                                         }
                                         ?> data-menu="item">Рекомендации</div>
                                     </a>

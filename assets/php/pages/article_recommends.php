@@ -76,8 +76,9 @@ if (isset($_GET["article"])) {
                     </div>
                 </div>
 
+                <!-- Literature -->
                 <div class="row">
-                    <?php require("../components/footer.php"); ?>
+                    <?php require("../components/literature.php"); ?>
                 </div>
 
             </div>

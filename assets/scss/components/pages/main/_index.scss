@@ -1,100 +1,97 @@
 @import "../../../colors/index";
 @import "../../../mixins/index";
 
-
-// -- Main
-.main {
-    &__title {
-        margin-bottom: 20px;
-    }
-}
-
-// -- Content
-.content {
-    padding: 50px 10px;
-    border-radius: 50px;
-    background-color: rgb(241, 241, 241, 0.9);
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    -ms-border-radius: 50px;
-    -o-border-radius: 50px;
-}
-
-#myChart {
-    padding: 0 4px;
-}
-
 // -- Region
-.region {
-    &__menu {
-        overflow: auto;
-        overflow-x: hidden;
-        max-height: 400px;
+.analysis {
+    &__region {
 
-        &-item {
-           @include menu-item;
+        &-menu {
+            overflow: auto;
+            overflow-x: hidden;
+            max-height: 400px;
 
-           &_active {
-            @include menu-active-item;
-           }
-        }
-    }
-}
-
-// -- Graph 
-.graph {
-    justify-content: center;
-    
-    &__title {
-        color: $text-color;
-        text-align: center;
-        font-weight: 300;
-        font-size: 14px;
-    }
-}
-
-// -- Options
-.options {
-    &__menu {
-        overflow: auto;
-        overflow-x: hidden;
-        max-height: 400px;
-
-        &-item {
+            &-item {
             @include menu-item;
-
-            &_recommends {
-                @include menu-item;
-                border-color: $second-color;
-                color:  $second-color;
-
-                &:hover {
-                    background-color: $second-color;
-                }
-            }
-
-            &_blocked {
-                @include menu-item;
-                border-color: $disable;
-                color: $disable;
-
-
-                &:hover {
-                    background-color: inherit;
-                    color: $disable;
-                }
-            }
 
             &_active {
                 @include menu-active-item;
             }
-            
+            }
+        }
+    }
+
+    // -- Content
+    &__content {
+        padding: 50px 10px;
+        border-radius: 50px;
+        background-color: rgb(241, 241, 241, 0.9);
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        -ms-border-radius: 50px;
+        -o-border-radius: 50px;
+    }
+
+    // -- Graph 
+    &__graph {
+        justify-content: center;
+        
+        &-title {
+            color: $text-color;
+            text-align: center;
+            font-weight: 300;
+            font-size: 14px;
+        }
+    }
+
+    // -- Options
+    &__options {
+        &-menu {
+            overflow: auto;
+            overflow-x: hidden;
+            max-height: 400px;
+
+            &-item {
+                @include menu-item;
+
+                &_recommends {
+                    @include menu-item;
+                    border-color: $second-color;
+                    color:  $second-color;
+
+                    &:hover {
+                        background-color: $second-color;
+                    }
+                }
+
+                &_blocked {
+                    @include menu-item;
+                    border-color: $disable;
+                    color: $disable;
+
+
+                    &:hover {
+                        background-color: inherit;
+                        color: $disable;
+                    }
+                }
+
+                &_active {
+                    @include menu-active-item;
+                }
+                
+            }
         }
     }
 }
+
 
 // -- Blocked link
 .blocked-link {
     pointer-events: none;
     cursor: default;
+}
+
+
+#myChart {
+    padding: 0 4px;
 }

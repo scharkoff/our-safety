@@ -67,7 +67,7 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
                         $count = 1;
                             foreach($articles_of_region as $key => $value) {
                                 $key_link = preg_replace('/\s+/', '', str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "", $key));
-                                echo '<li class="articles__item">
+                                echo '<li class="articles__list-item">
                                     <a href="article_recommends.php?region='.$_GET["region"].'&article='.$key_link.'">'.$count.'. '.$key.' - <b>'.$value.'</b></a>
                                 </li>';
                                 $count++;
@@ -88,9 +88,9 @@ $articles_of_region = array_slice($articles_of_region, 0, 5);
                     </div>
                 </div>
 
-                <!-- Footer -->
+                <!-- Literature -->
                 <div class="row">
-                    <?php require("../components/footer.php"); ?>
+                    <?php require("../components/literature.php"); ?>
                 </div>
 
             </div>
