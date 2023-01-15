@@ -513,15 +513,6 @@ template {
   background-color: rgb(0, 140, 255);
   color: #fff;
 }
-.analysis__content {
-  padding: 50px 10px;
-  border-radius: 50px;
-  background-color: rgba(241, 241, 241, 0.9);
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
-}
 .analysis__graph {
   justify-content: center;
 }
@@ -684,7 +675,7 @@ template {
   margin: 0 0 15px 0;
 }
 .welcome__suptitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
   color: rgb(56, 56, 56);
@@ -699,7 +690,7 @@ template {
   background-color: rgb(0, 140, 255);
   border: 1px solid rgb(0, 140, 255);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   padding: 10px 15px;
   cursor: pointer;
   transition: 0.2s linear;
@@ -802,7 +793,7 @@ template {
   background-color: rgb(0, 140, 255);
   border: 1px solid rgb(0, 140, 255);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   padding: 10px 15px;
   cursor: pointer;
   transition: 0.2s linear;
@@ -814,6 +805,16 @@ template {
 .back:hover {
   background-color: inherit;
   color: rgb(0, 140, 255);
+}
+
+.content {
+  padding: 50px 10px;
+  border-radius: 50px;
+  background-color: rgba(241, 241, 241, 0.9);
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 
 @font-face {

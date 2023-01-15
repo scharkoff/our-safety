@@ -28,7 +28,7 @@ require("../utils/regions.php");
         </div>
 
         <div class="container">
-            <div class="row analysis__content">
+            <div class="row content">
 
                 <!-- Title -->
                 <div class="row">
