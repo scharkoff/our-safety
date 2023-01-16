@@ -14,6 +14,7 @@ if (isset($_GET["region"])) {
     }
 }
 
+
 // -- Top articles of the current region (поп статей по выбранному региону)
 $articles_of_region = array();
 if (isset($_GET["region"]))  {
@@ -27,6 +28,7 @@ if (isset($_GET["region"]))  {
 $articles_of_region = array_slice($articles_of_region, 0, count($articles_of_region)/2);
 arsort($articles_of_region);
 $articles_of_region = array_slice($articles_of_region, 0, 5);
+
 
 ?>
 
