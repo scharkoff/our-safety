@@ -188,8 +188,8 @@ require("../utils/regions.php");
 
     <script>
     // -- Charts
-    const ctxQuantityChart = document.querySelector("#quantityChart").getContext("2d"),
-        ctxPercentageChart = document.querySelector("#percentageChart").getContext("2d");
+    const ctxQuantityChart = document.querySelector("#quantityChart").getContext("2d"), // -- количественный график
+        ctxPercentageChart = document.querySelector("#percentageChart").getContext("2d"); // -- процентный график
 
     <?php  
 
