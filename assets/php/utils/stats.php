@@ -2,6 +2,8 @@
 
 require("config.php");
 require("querys.php");
+require("regions.php");
+
 
 // -- General statistics (общая статистика)
 // -- # Count
@@ -76,7 +78,8 @@ function count_general_statistics_percent($region) {
 
     $total_count = 0;
 
-    // -- Total sum
+    // -- Total sums:
+    
     while ($row = mysqli_fetch_assoc($crime_articles)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
             $total_count += $row["importance_of_the_statistical_factor"];
@@ -143,19 +146,17 @@ function count_general_statistics_percent($region) {
 }
 
 
-// -- Stats of causes of crimes (статистика причин приступлений)
+// -- Stats of datasets (статистика для каждого датасета)
 // # -- Count
-function count_causes_of_crimes($region) {
+function count_quantitative_values($region, $query) {
     $result = array();
 
     global $connect;
 
-    global $causes_of_crimes;
-
-    mysqli_data_seek($causes_of_crimes, 0);
+    mysqli_data_seek($query, 0);
 
     // -- Create array of data [$key => region, $value => amount of the statistical factor]
-    while ($row = mysqli_fetch_assoc($causes_of_crimes)) {
+    while ($row = mysqli_fetch_assoc($query)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
             $result[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
         }
@@ -165,28 +166,27 @@ function count_causes_of_crimes($region) {
 }
 
 // # -- Percent
-function count_causes_of_crimes_percent($region) {
+function count_percent_values($region, $query) {
     $result = array();
 
     global $connect;
 
-    global $causes_of_crimes;
-
     // -- Return arrow to start of query string result
-    mysqli_data_seek($causes_of_crimes, 0);
+    mysqli_data_seek($query, 0);
 
     $total_count = 0;
 
-    while ($row = mysqli_fetch_assoc($causes_of_crimes)) {
+    while ($row = mysqli_fetch_assoc($query)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
             $total_count += $row["importance_of_the_statistical_factor"];
         }
     }
 
     // -- Return arrow to start of query string result
-    mysqli_data_seek($causes_of_crimes, 0);
+    mysqli_data_seek($query, 0);
 
-    while ($row = mysqli_fetch_assoc($causes_of_crimes)) {
+    // -- Create array of data [$key => region, $value => percent of the statistical factor]
+    while ($row = mysqli_fetch_assoc($query)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
             $result[$row["name_of_the_statistical_factor"]] = round($row["importance_of_the_statistical_factor"] / $total_count, 3) * 100;
         }
@@ -197,110 +197,68 @@ function count_causes_of_crimes_percent($region) {
     return $result;
 }
 
-// -- Article violation statistics (статистика нарушений статей)
-// # -- Count
-function count_article_violation($region) {
+
+// -- Dispersion of the statistical factor
+function count_causes_of_crimes_dispersion($region, $query) {
     $result = array();
 
     global $connect;
 
-    global $crime_articles;
+    global $regions;
 
     // -- Return arrow to start of query string result
-    mysqli_data_seek($crime_articles, 0);
+    mysqli_data_seek($query, 0);
 
-    // -- Create array of data [$key => region, $value => amount of the statistical factor]
-    while ($row = mysqli_fetch_assoc($crime_articles)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $result[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
-        }
-    }
-
-    return $result;
-}
-
-// # -- Percent
-function count_article_violation_percent($region) {
-    $result = array();
-
-    global $connect;
-
-    global $crime_articles;
-
-    // -- Return arrow to start of query string result
-    mysqli_data_seek($crime_articles, 0);
-
+    $total_sum = 0;
     $total_count = 0;
 
-    while ($row = mysqli_fetch_assoc($crime_articles)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $total_count += $row["importance_of_the_statistical_factor"];
-        }
-    }
-
-     // -- Return arrow to start of query string result
-     mysqli_data_seek($crime_articles, 0);
-
-    while ($row = mysqli_fetch_assoc($crime_articles)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $result[$row["name_of_the_statistical_factor"]] = round($row["importance_of_the_statistical_factor"] / $total_count, 3) * 100;
-        }
-    }
-
-    return $result;
-}
-
-// -- Stats of victims (статистика потерпевших)
-// # -- Count
-function count_number_of_victims($region) {
-    $result = array();
-
-    global $connect;
-
-    global $number_of_victims;
-
-    // -- Return arrow to start of query string result
-    mysqli_data_seek($number_of_victims, 0);
+    $total_sum_of_the_statistical_factors = array();
+    $average_of_the_statistical_factors = array();
     
-    // -- Create array of data [$key => region, $value => amount of the statistical factor]
-    while ($row = mysqli_fetch_assoc($number_of_victims)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $result[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
+    $dispersions = array();
+
+
+    // -- Count total sum and count of the statistical factor
+    while ($row = mysqli_fetch_assoc($query)) {
+        if (isset($total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]])) {
+            $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] += $row["importance_of_the_statistical_factor"];
+        } else {
+            $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
         }
     }
 
-    return $result;
-}
-
-// # -- Percent
-function count_number_of_victims_percent($region) {
-    $result = array();
-
-    global $connect;
-
-    global $number_of_victims;
-
-    // -- Return arrow to start of query string result
-    mysqli_data_seek($number_of_victims, 0);
-
-    $total_count = 0;
-
-    while ($row = mysqli_fetch_assoc($number_of_victims)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $total_count += $row["importance_of_the_statistical_factor"];
+    // -- Count average for each statistical factor
+    foreach ($total_sum_of_the_statistical_factors as $key => $value) {
+        if (!isset($average_of_the_statistical_factors[$key])) {
+            $average_of_the_statistical_factors[$key] = round($total_sum_of_the_statistical_factors[$key] / count($regions), 2);
         }
+      
     }
 
     // -- Return arrow to start of query string result
-    mysqli_data_seek($number_of_victims, 0);
+    mysqli_data_seek($query, 0);
 
-    while ($row = mysqli_fetch_assoc($number_of_victims)) {
-        if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $result[$row["name_of_the_statistical_factor"]] = round($row["importance_of_the_statistical_factor"] / $total_count, 3) * 100;
-        }
+    // -- Count dispersion for each statistical factor
+    $numerators = array();
+    $result = 0;
+    while ($row = mysqli_fetch_assoc($query)) {
+            foreach ($average_of_the_statistical_factors as $key => $value) {
+                if ($key == $row["name_of_the_statistical_factor"]) {
+                    if (isset($numerators[$key])) {
+                        $numerators[$key] += pow($row["importance_of_the_statistical_factor"] - $value, 2);
+                        $result = sqrt($numerators[$key] / count($regions));
+                        $dispersions[$key] = round($result, 2);
+                    } else {
+                        $numerators[$key] = pow($row["importance_of_the_statistical_factor"] - $value, 2);
+                    }
+                
+
+                }
+            }
     }
 
-    return $result;
+
+    return $dispersions;
 }
 
 

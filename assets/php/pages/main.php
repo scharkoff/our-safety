@@ -5,6 +5,12 @@ require("../utils/querys.php");
 require("../utils/stats.php");
 require("../utils/regions.php");
 
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +80,7 @@ require("../utils/regions.php");
                         <p class="analysis__graph-title">Данные за январь-июнь 2022 г.</p>
                         <canvas id="quantityChart"></canvas>
                         <canvas id="percentageChart"></canvas>
+                        <canvas id="dispersionChart"></canvas>
                     </div>
 
                     <!-- Options -->
@@ -189,85 +196,52 @@ require("../utils/regions.php");
     <script>
     // -- Charts
     const ctxQuantityChart = document.querySelector("#quantityChart").getContext("2d"), // -- количественный график
-        ctxPercentageChart = document.querySelector("#percentageChart").getContext("2d"); // -- процентный график
-
-    <?php  
-
-    // -- Charts data (создание данных для графиков):
-    // -- General statistics (общая статистика)
-    $count_general_statistics = array();
-    $count_general_statistics_percent = array();
-
-    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-        $count_general_statistics = array_merge($count_general_statistics, count_general_statistics($_GET["region"]));
-        $count_general_statistics_percent = array_merge($count_general_statistics_percent, count_general_statistics_percent($_GET["region"]));
-    }
-
-
-    // -- Article violation statistics (статистика нарушений статей)
-    $count_article_violation = array();
-    $count_article_violation_percent = array();
-
-    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
-        $count_article_violation = array_merge($count_article_violation, count_article_violation($_GET["region"]));
-        $count_article_violation_percent = array_merge($count_article_violation_percent, count_article_violation_percent($_GET["region"]));
-    }
-
-    // -- Stats of causes of crimes (статистика причин приступлений)
-    $count_causes_of_crimes = array();
-    $count_causes_of_crimes_percent = array();
-
-    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
-        $count_causes_of_crimes = array_merge($count_causes_of_crimes, count_causes_of_crimes($_GET["region"]));
-        $count_causes_of_crimes_percent = array_merge($count_causes_of_crimes_percent, count_causes_of_crimes_percent($_GET["region"]));
-    }
-
-    // -- Stats of count of number of victims (кол-во потерпевших)
-    $count_number_of_victims = array();
-    $count_number_of_victims_percent = array();
-
-    if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-        $count_number_of_victims = array_merge($count_number_of_victims, count_number_of_victims($_GET["region"]));
-        $count_number_of_victims_percent = array_merge($count_number_of_victims_percent, count_number_of_victims_percent($_GET["region"]));
-    }
-
-    ?>
+        ctxPercentageChart = document.querySelector("#percentageChart").getContext("2d"), // -- процентный график
+        ctxDispersionChart = document.querySelector("#dispersionChart").getContext("2d"); // -- дисперсионный график
 
     // -- Setup data for quantity chart
     const quantityData = {
         labels: <?php 
                 
-                // -- General statistics (общая статистика)
-                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-                    echo json_encode(array_keys($count_general_statistics));
-                } 
-                
-                // -- Stats of causes of crimes (статистика причин преступлений)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
-                    echo json_encode(array_keys($count_causes_of_crimes));
-                } 
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
+     
+                    // -- General statistics (общая статистика)
+                    if ($_GET["option"] == "general_statistics") {
+                        $count_general_statistics = count_general_statistics($_GET["region"]);
+                        echo json_encode(array_keys($count_general_statistics));
+                    } 
+                    
+                    // -- Stats of causes of crimes (статистика причин преступлений)
+                    else if ($_GET["option"] == "causes_of_crimes") {
+                        $count_causes_of_crimes = count_quantitative_values($_GET["region"], $causes_of_crimes);
+                        echo json_encode(array_keys($count_causes_of_crimes));
+                    } 
+                    
+                    // -- Article violation statistics (статистика нарушений статей)
+                    else if ($_GET["option"] == "articles") {
+                        $count_article_violation = count_quantitative_values($_GET["region"], $crime_articles);
+                        $keys = array_keys($count_article_violation);
+                        foreach ($keys as $key => $value) {
+                            if (strpos($value, "зарегистрированных")) {
+                                $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
+                            }
 
-                
-                // -- Article violation statistics (статистика нарушений статей)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
-                    $keys = array_keys($count_article_violation);
-                    foreach ($keys as $key => $value) {
-                        if (strpos($value, "зарегистрированных")) {
-                            $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
+                            if (strpos($value, "расследованных")) {
+                                $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "(Расследованных)", $value);
+                            }
                         }
+                        echo json_encode($keys);
+                    } 
 
-                        if (strpos($value, "расследованных")) {
-                            $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "(Расследованных)", $value);
-                        }
+                    // -- Stats of count number of victims (кол-во потерпевших)
+                    else if ($_GET["option"] == "victims") {
+                        $count_number_of_victims = count_quantitative_values($_GET["region"], $number_of_victims);
+                        echo json_encode(array_keys($count_number_of_victims));
+                    } else {
+                        echo json_encode([]);
                     }
-                    echo json_encode($keys);
-                } 
+                }
 
-                 // -- Stats of count number of victims (кол-во потерпевших)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-                    echo json_encode(array_keys($count_number_of_victims));
-                } 
-                
                 else {
                     echo json_encode(["Ничего не выбрано"]);
                 }
@@ -285,27 +259,38 @@ require("../utils/regions.php");
                     echo json_encode("Регион не выбран");
                 }
             ?>,
-            data: <?php        
+            data: <?php  
+
                 // -- General statistics (общая статистика)
-                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-                    echo json_encode(array_values($count_general_statistics));
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
+  
+                    if ($_GET["option"] == "general_statistics") {
+                        $count_general_statistics = count_general_statistics($_GET["region"]);
+                        echo json_encode(array_values($count_general_statistics));
+                    }
+                    
+                    // -- Stats of causes of crimes (статистика причин преступлений)
+                    else if ($_GET["option"] == "causes_of_crimes") {
+                        $count_causes_of_crimes = count_quantitative_values($_GET["region"], $causes_of_crimes);
+                        echo json_encode(array_values($count_causes_of_crimes));
+                    } 
+
+                    // -- Article violation statistics (статистика нарушений статей)
+                    else if ($_GET["option"] == "articles") {
+                        $count_article_violation = count_quantitative_values($_GET["region"], $crime_articles);
+                        echo json_encode(array_values($count_article_violation));
+                    } 
+
+                    // -- Stats of count number of victims (кол-во потерпевших)
+                    else if ($_GET["option"] == "victims") {
+                        $count_number_of_victims = count_quantitative_values($_GET["region"], $number_of_victims);
+                        echo json_encode(array_values($count_number_of_victims));
+                    } 
+                    
+                    else {
+                        echo json_encode([]);
+                    }
                 }
-                
-                // -- Stats of causes of crimes (статистика причин преступлений)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
-                    echo json_encode(array_values($count_causes_of_crimes));
-                } 
-
-                // -- Article violation statistics (статистика нарушений статей)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
-                    echo json_encode(array_values($count_article_violation));
-                } 
-
-                // -- Stats of count number of victims (кол-во потерпевших)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-                    echo json_encode(array_values($count_number_of_victims));
-                } 
-                
                 else {
                     echo json_encode([]);
                 }
@@ -313,7 +298,7 @@ require("../utils/regions.php");
                 
             ?>,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
+                'rgba(0, 140, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
                 'rgba(255, 205, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
@@ -322,7 +307,7 @@ require("../utils/regions.php");
                 'rgba(201, 203, 207, 0.2)'
             ],
             borderColor: [
-                'rgb(255, 99, 132)',
+                'rgb(0, 140, 255)',
                 'rgb(255, 159, 64)',
                 'rgb(255, 205, 86)',
                 'rgb(75, 192, 192)',
@@ -338,37 +323,43 @@ require("../utils/regions.php");
     const percentageData = {
         labels: <?php 
                 
-                // -- General statistics (общая статистика)
-                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-                    echo json_encode(array_keys($count_general_statistics_percent));
-                } 
-                
-                // -- Stats of causes of crimes (статистика причин приступлений)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
-                    echo json_encode(array_keys($count_causes_of_crimes_percent));
-                } 
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
 
-                
-                // -- Article violation statistics (статистика нарушений статей)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
-                    $keys = array_keys($count_article_violation_percent);
-                    foreach ($keys as $key => $value) {
-                        if (strpos($value, "зарегистрированных")) {
-                            $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
+                    // -- General statistics (общая статистика)
+                    if ($_GET["option"] == "general_statistics") {
+                        $count_general_statistics_percent = count_general_statistics_percent($_GET["region"]);
+                        echo json_encode(array_keys($count_general_statistics_percent));
+                    } 
+                    
+                    // -- Stats of causes of crimes (статистика причин приступлений)
+                    else if ($_GET["option"] == "causes_of_crimes") {
+                        $count_causes_of_crimes_percent = count_percent_values($_GET["region"], $causes_of_crimes);
+                        echo json_encode(array_keys($count_causes_of_crimes_percent));
+                    } 
+
+                    // -- Article violation statistics (статистика нарушений статей)
+                    else if ($_GET["option"] == "articles") {
+                        $count_article_violation_percent = count_percent_values($_GET["region"], $crime_articles);
+                        $keys = array_keys($count_article_violation_percent);
+                        foreach ($keys as $key => $value) {
+                            if (strpos($value, "зарегистрированных")) {
+                                $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
+                            }
+
+                            if (strpos($value, "расследованных")) {
+                                $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "(Расследованных)", $value);
+                            }
                         }
+                        echo json_encode($keys);
+                    } 
 
-                        if (strpos($value, "расследованных")) {
-                            $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "(Расследованных)", $value);
-                        }
-                    }
-                    echo json_encode($keys);
-                } 
+                    // -- Stats of count number of victims (кол-во потерпевших)
+                    else if ($_GET["option"] == "victims") {
+                        $count_number_of_victims_percent = count_percent_values($_GET["region"], $number_of_victims);
+                        echo json_encode(array_keys($count_number_of_victims_percent));
+                    } 
+                }
 
-                 // -- Stats of count number of victims (кол-во потерпевших)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-                    echo json_encode(array_keys($count_number_of_victims_percent));
-                } 
-                
                 else {
                     echo json_encode(["Ничего не выбрано"]);
                 }
@@ -387,26 +378,35 @@ require("../utils/regions.php");
                 }
             ?>,
             data: <?php        
-                // -- General statistics (общая статистика)
-                if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
-                    echo json_encode(array_values($count_general_statistics_percent));
-                }
-                
-                // -- Stats of causes of crimes (статистика причин приступлений)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "causes_of_crimes") {
-                    echo json_encode(array_values($count_causes_of_crimes_percent));
-                } 
 
-                // -- Article violation statistics (статистика нарушений статей)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "articles") {
-                    echo json_encode(array_values($count_article_violation_percent));
-                } 
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
+ 
+                    // -- General statistics (общая статистика)
+                    if ($_GET["option"] == "general_statistics") {
+                        $count_general_statistics_percent = count_general_statistics_percent($_GET["region"]);
+                        echo json_encode(array_values($count_general_statistics_percent));
+                    }
+                    
+                    // -- Stats of causes of crimes (статистика причин приступлений)
+                    else if ($_GET["option"] == "causes_of_crimes") {
+                        $count_causes_of_crimes_percent = count_percent_values($_GET["region"], $causes_of_crimes);
+                        echo json_encode(array_values($count_causes_of_crimes_percent));
+                    } 
 
-                // -- Stats of count number of victims (кол-во потерпевших)
-                else if (isset($_GET["region"]) && isset($_GET["option"]) && $_GET["option"] == "victims") {
-                    echo json_encode(array_values($count_number_of_victims_percent));
-                } 
-                
+                    // -- Article violation statistics (статистика нарушений статей)
+                    else if ($_GET["option"] == "articles") {
+                        $count_article_violation_percent = count_percent_values($_GET["region"], $crime_articles);
+                        echo json_encode(array_values($count_article_violation_percent));
+                    } 
+
+                    // -- Stats of count number of victims (кол-во потерпевших)
+                    else if ($_GET["option"] == "victims") {
+                        $count_number_of_victims_percent = count_percent_values($_GET["region"], $number_of_victims);
+                        echo json_encode(array_values($count_number_of_victims_percent));
+                    } else {
+                        echo json_encode([]);
+                    }
+                }   
                 else {
                     echo json_encode([]);
                 }
@@ -431,7 +431,95 @@ require("../utils/regions.php");
                 'rgb(154, 162, 235)',
                 'rgb(53, 102, 255)',
             ],
-            borderWidth: 1
+            borderWidth: 1,
+            fill: true
+        }]
+    };
+
+    // -- Setup data for dispersion chart
+    const dispersionData = {
+        labels: <?php 
+                
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
+
+                    // -- Stats of causes of crimes (статистика причин приступлений)
+                    if ($_GET["option"] == "causes_of_crimes") {
+                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $causes_of_crimes);
+                        echo json_encode(array_keys($dispersion));
+                    } 
+                    
+                    else if ($_GET["option"] == "articles") {
+                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
+                        echo json_encode(array_keys($dispersion));
+                    }
+
+                    else if ($_GET["option"] == "victims") {
+                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $number_of_victims);
+                        echo json_encode(array_keys($dispersion));
+                    } 
+                    
+                    else {
+                        echo json_encode([]);
+                    }
+                    
+                } else {
+                    echo json_encode([]);
+                }
+
+                
+
+            ?>,
+        datasets: [{
+            label: <?php echo json_encode("Дисперсия показателей"); ?>,
+            data: <?php    
+            
+                if (isset($_GET["region"]) && isset($_GET["option"])) {
+
+                    // -- Stats of causes of crimes (статистика причин приступлений)
+                    if ($_GET["option"] == "causes_of_crimes") {
+                        echo json_encode(array_values($dispersion));
+                    } 
+
+                    else if ($_GET["option"] == "articles") {
+                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
+                        echo json_encode(array_values($dispersion));  
+                    }
+
+                    else if ($_GET["option"] == "victims") {
+                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $number_of_victims);
+                        echo json_encode(array_values($dispersion));
+                    } 
+                    
+                    else {
+                        echo json_encode([]);
+                    }
+                    
+                } else {
+                    echo json_encode([]);
+                }
+ 
+            ?>,
+            backgroundColor: [
+                'rgba(55, 199, 252, 0.2)',
+                'rgba(105, 205, 86, 0.2)',
+                'rgba(100, 55, 164, 0.2)',
+                'rgba(55, 99, 132, 0.2)',
+                'rgba(101, 203, 207, 0.2)',
+                'rgba(154, 162, 235, 0.2)',
+                'rgba(53, 102, 255, 0.2)',
+            ],
+            borderColor: [
+                'rgb(55, 199, 252)',
+                'rgb(105, 205, 86)',
+                'rgb(100, 55, 164)',
+                'rgb(55, 99, 132)',
+                'rgb(101, 203, 207)',
+                'rgb(154, 162, 235)',
+                'rgb(53, 102, 255)',
+            ],
+            borderWidth: 1,
+            fill: true
+
         }]
     };
 
@@ -479,9 +567,34 @@ require("../utils/regions.php");
         },
     };
 
+    // -- Dispersion chart config
+    const dispersionConfig = {
+        type: 'line',
+        data: dispersionData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+
+                },
+
+                x: {
+                    display: false,
+                    ticks: {
+                        // maxRotation: 90,
+                        // minRotation: 90,
+                    }
+                }
+            },
+        },
+    };
+
+
+
     // -- Upload charts
-    const quantityChart = new Chart(ctxQuantityChart, quantityConfig);
-    const percentageChart = new Chart(ctxPercentageChart, percentageConfig);
+    const quantityChart = new Chart(ctxQuantityChart, quantityConfig),
+        percentageChart = new Chart(ctxPercentageChart, percentageConfig),
+        dispersionChart = new Chart(ctxDispersionChart, dispersionConfig);
     </script>
 
 </body>
