@@ -770,11 +770,10 @@ template {
 
 .recommends__text {
   line-height: 1.5;
-  font-size: 16px;
   margin-bottom: 25px;
 }
 .recommends__title {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .wrapper {
