@@ -787,6 +787,14 @@ template {
   opacity: 0;
 }
 
+.hide-chart {
+  display: none !important;
+}
+
+.show-chart {
+  display: block !important;
+}
+
 .back {
   color: #fff;
   background-color: rgb(0, 140, 255);

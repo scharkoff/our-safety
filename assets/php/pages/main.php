@@ -80,7 +80,13 @@ require("../utils/regions.php");
                         <p class="analysis__graph-title">Данные за январь-июнь 2022 г.</p>
                         <canvas id="quantityChart"></canvas>
                         <canvas id="percentageChart"></canvas>
-                        <canvas id="dispersionChart"></canvas>
+                        <canvas class=<?php 
+                            if (isset($_GET["option"]) && $_GET["option"] == "general_statistics") {
+                                echo "hide-chart";
+                            } else {
+                                echo "show-chartфц";
+                            }
+                        ?> id="dispersionChart"></canvas>
                     </div>
 
                     <!-- Options -->
@@ -298,18 +304,18 @@ require("../utils/regions.php");
                 
             ?>,
             backgroundColor: [
+                'rgba(111, 0, 255, 0.2)',
                 'rgba(0, 140, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
+                'rgba(0, 183, 255, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(201, 203, 207, 0.2)'
             ],
             borderColor: [
+                'rgb(111, 0, 255)',
                 'rgb(0, 140, 255)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
+                'rgb(0, 183, 255)',
                 'rgb(75, 192, 192)',
                 'rgb(54, 162, 235)',
                 'rgb(153, 102, 255)',
@@ -449,8 +455,18 @@ require("../utils/regions.php");
                     } 
                     
                     else if ($_GET["option"] == "articles") {
-                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
-                        echo json_encode(array_keys($dispersion));
+                         $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
+                        $keys = array_keys($dispersion);
+                        foreach ($keys as $key => $value) {
+                            if (strpos($value, "зарегистрированных")) {
+                                $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
+                            }
+
+                            if (strpos($value, "расследованных")) {
+                                $keys[$key] = str_replace("Количество предварительно расследованных преступлений в отчетном периоде (из числа находившихся в производстве или зарегистрированных в отчетном периоде) по", "(Расследованных)", $value);
+                            }
+                        }
+                        echo json_encode($keys);
                     }
 
                     else if ($_GET["option"] == "victims") {

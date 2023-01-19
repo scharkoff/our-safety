@@ -12,6 +12,14 @@
     opacity: 0;
 }
 
+.hide-chart {
+    display: none !important;
+}
+
+.show-chart {
+    display: block !important;
+}
+
 .back {
     @include primary-btn;
 }
