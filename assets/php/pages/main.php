@@ -450,12 +450,12 @@ require("../utils/regions.php");
 
                     // -- Stats of causes of crimes (статистика причин приступлений)
                     if ($_GET["option"] == "causes_of_crimes") {
-                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $causes_of_crimes);
+                        $dispersion = count_dispersion($_GET["region"], $causes_of_crimes);
                         echo json_encode(array_keys($dispersion));
                     } 
                     
                     else if ($_GET["option"] == "articles") {
-                         $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
+                         $dispersion = count_dispersion($_GET["region"], $crime_articles);
                         $keys = array_keys($dispersion);
                         foreach ($keys as $key => $value) {
                             if (strpos($value, "зарегистрированных")) {
@@ -470,7 +470,7 @@ require("../utils/regions.php");
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $number_of_victims);
+                        $dispersion = count_dispersion($_GET["region"], $number_of_victims);
                         echo json_encode(array_keys($dispersion));
                     } 
                     
@@ -497,12 +497,12 @@ require("../utils/regions.php");
                     } 
 
                     else if ($_GET["option"] == "articles") {
-                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $crime_articles);
+                        $dispersion = count_dispersion($_GET["region"], $crime_articles);
                         echo json_encode(array_values($dispersion));  
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_causes_of_crimes_dispersion($_GET["region"], $number_of_victims);
+                        $dispersion = count_dispersion($_GET["region"], $number_of_victims);
                         echo json_encode(array_values($dispersion));
                     } 
                     

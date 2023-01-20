@@ -199,7 +199,7 @@ function count_percent_values($region, $query) {
 
 
 // -- Dispersion of the statistical factor
-function count_causes_of_crimes_dispersion($region, $query) {
+function count_dispersion($region, $query) {
     $result = array();
 
     global $connect;
