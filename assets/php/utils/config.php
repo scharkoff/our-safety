@@ -1,10 +1,9 @@
 <?php
 
-$db_host = 'localhost';
-$db_username = 'root';
-$db_password = '';
-$db_name = 'our_safety';
-$db_charset = 'utf8';
+$db_host = 'std-mysql.ist.mospolytech.ru';
+$db_username = 'std_2021_our_safety';
+$db_password = '123321zsq';
+$db_name = 'std_2021_our_safety';
 
 $connect = mysqli_connect($db_host, $db_username, $db_password, $db_name);
 
