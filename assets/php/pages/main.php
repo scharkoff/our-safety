@@ -7,10 +7,6 @@ require("../utils/regions.php");
 
 
 
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -446,16 +442,15 @@ require("../utils/regions.php");
     const dispersionData = {
         labels: <?php 
                 
-                if (isset($_GET["region"]) && isset($_GET["option"])) {
+                if (isset($_GET["option"])) {
 
-                    // -- Stats of causes of crimes (статистика причин приступлений)
                     if ($_GET["option"] == "causes_of_crimes") {
-                        $dispersion = count_dispersion($_GET["region"], $causes_of_crimes);
+                        $dispersion = count_dispersion($causes_of_crimes);
                         echo json_encode(array_keys($dispersion));
                     } 
                     
                     else if ($_GET["option"] == "articles") {
-                         $dispersion = count_dispersion($_GET["region"], $crime_articles);
+                         $dispersion = count_dispersion($crime_articles);
                         $keys = array_keys($dispersion);
                         foreach ($keys as $key => $value) {
                             if (strpos($value, "зарегистрированных")) {
@@ -470,7 +465,7 @@ require("../utils/regions.php");
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_dispersion($_GET["region"], $number_of_victims);
+                        $dispersion = count_dispersion($number_of_victims);
                         echo json_encode(array_keys($dispersion));
                     } 
                     
@@ -489,20 +484,20 @@ require("../utils/regions.php");
             label: <?php echo json_encode("Дисперсия показателей"); ?>,
             data: <?php    
             
-                if (isset($_GET["region"]) && isset($_GET["option"])) {
+                if (isset($_GET["option"])) {
 
-                    // -- Stats of causes of crimes (статистика причин приступлений)
                     if ($_GET["option"] == "causes_of_crimes") {
+                        $dispersion = count_dispersion($causes_of_crimes);
                         echo json_encode(array_values($dispersion));
                     } 
 
                     else if ($_GET["option"] == "articles") {
-                        $dispersion = count_dispersion($_GET["region"], $crime_articles);
+                        $dispersion = count_dispersion($crime_articles);
                         echo json_encode(array_values($dispersion));  
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_dispersion($_GET["region"], $number_of_victims);
+                        $dispersion = count_dispersion($number_of_victims);
                         echo json_encode(array_values($dispersion));
                     } 
                     

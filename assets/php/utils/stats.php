@@ -199,7 +199,7 @@ function count_percent_values($region, $query) {
 
 
 // -- Dispersion of the statistical factor
-function count_dispersion($region, $query) {
+function count_dispersion($query) {
     $result = array();
 
     global $connect;
@@ -220,19 +220,18 @@ function count_dispersion($region, $query) {
 
     // -- Count total sum and count of the statistical factor
     while ($row = mysqli_fetch_assoc($query)) {
-        if (isset($total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]])) {
-            $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] += $row["importance_of_the_statistical_factor"];
-        } else {
-            $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
+        if ($row["subject"] != "Всего по России") {  
+            if (isset($total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]])) {
+                $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] += $row["importance_of_the_statistical_factor"];
+            } else {
+                $total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]] = $row["importance_of_the_statistical_factor"];
+            }
         }
     }
 
     // -- Count average for each statistical factor
     foreach ($total_sum_of_the_statistical_factors as $key => $value) {
-        if (!isset($average_of_the_statistical_factors[$key])) {
-            $average_of_the_statistical_factors[$key] = round($total_sum_of_the_statistical_factors[$key] / count($regions), 2);
-        }
-      
+        $average_of_the_statistical_factors[$key] = round($total_sum_of_the_statistical_factors[$key] / (count($regions) - 1), 2);
     }
 
     // -- Return arrow to start of query string result
@@ -242,11 +241,12 @@ function count_dispersion($region, $query) {
     $numerators = array();
     $result = 0;
     while ($row = mysqli_fetch_assoc($query)) {
+        if ($row["subject"] != "Всего по России") {
             foreach ($average_of_the_statistical_factors as $key => $value) {
                 if ($key == $row["name_of_the_statistical_factor"]) {
                     if (isset($numerators[$key])) {
                         $numerators[$key] += pow($row["importance_of_the_statistical_factor"] - $value, 2);
-                        $result = sqrt($numerators[$key] / count($regions));
+                        $result = sqrt($numerators[$key] / (count($regions) - 1));
                         $dispersions[$key] = round($result, 2);
                     } else {
                         $numerators[$key] = pow($row["importance_of_the_statistical_factor"] - $value, 2);
@@ -255,12 +255,11 @@ function count_dispersion($region, $query) {
 
                 }
             }
+        }
     }
-
 
     return $dispersions;
 }
-
 
 
 ?>
