@@ -73,6 +73,22 @@
     }
 }
 
+.contacts {
+    &__list {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+
+        &-item {
+            font-size: 13px;
+            
+            span, a {
+                color: $primary-color;
+            }
+        }
+    }
+}
+
 
 // -- Blocked link
 .blocked-link {

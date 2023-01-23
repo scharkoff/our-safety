@@ -174,11 +174,12 @@ function count_percent_values($region, $query) {
     // -- Return arrow to start of query string result
     mysqli_data_seek($query, 0);
 
-    $total_count = 0;
+    $total_sum = 0;
 
+    // -- Count sum of all statistical factors for region
     while ($row = mysqli_fetch_assoc($query)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $total_count += $row["importance_of_the_statistical_factor"];
+            $total_sum += $row["importance_of_the_statistical_factor"];
         }
     }
 
@@ -188,7 +189,7 @@ function count_percent_values($region, $query) {
     // -- Create array of data [$key => region, $value => percent of the statistical factor]
     while ($row = mysqli_fetch_assoc($query)) {
         if (preg_replace('/\s+/', '', $row["subject"]) == $region) {
-            $result[$row["name_of_the_statistical_factor"]] = round($row["importance_of_the_statistical_factor"] / $total_count, 3) * 100;
+            $result[$row["name_of_the_statistical_factor"]] = round($row["importance_of_the_statistical_factor"] / $total_sum, 3) * 100;
         }
         
     }

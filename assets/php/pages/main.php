@@ -153,7 +153,7 @@ require("../utils/regions.php");
                                         } else {
                                             echo "analysis__options-menu-item";
                                         }
-                                        ?> data-menu="item">Потервпевшие</div>
+                                        ?> data-menu="item">Потерпевшие</div>
                                     </a>
 
                                     <a class=<?php
@@ -180,6 +180,15 @@ require("../utils/regions.php");
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="contacts">
+                        <ul class="contacts__list">
+                            <li class="contacts__list-item">Developed by <span>Sharkoff</span></li>
+                            <li class="contacts__list-item">sharkov.agent@mail.ru</li>
+                            <li class="contacts__list-item"><a href="https://sharkoff.su"
+                                    target="_blank">sharkoff.su</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -481,7 +490,7 @@ require("../utils/regions.php");
 
             ?>,
         datasets: [{
-            label: <?php echo json_encode("Дисперсия показателей"); ?>,
+            label: <?php echo json_encode("Стандартное отклонение показателей"); ?>,
             data: <?php    
             
                 if (isset($_GET["option"])) {
