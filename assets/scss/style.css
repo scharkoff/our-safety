@@ -483,10 +483,13 @@ template {
   color: rgb(0, 140, 255);
 }
 
+.analysis canvas {
+  margin-bottom: 45px;
+}
 .analysis__region-menu {
   overflow: auto;
   overflow-x: hidden;
-  max-height: 400px;
+  max-height: 800px;
 }
 .analysis__region-menu-item {
   cursor: pointer;

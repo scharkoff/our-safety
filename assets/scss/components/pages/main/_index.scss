@@ -3,12 +3,16 @@
 
 // -- Region
 .analysis {
+    canvas {
+        margin-bottom: 45px;
+    }
+
     &__region {
 
         &-menu {
             overflow: auto;
             overflow-x: hidden;
-            max-height: 400px;
+            max-height: 800px;
 
             &-item {
             @include menu-item;
