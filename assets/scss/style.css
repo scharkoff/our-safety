@@ -492,6 +492,7 @@ template {
   max-height: 800px;
 }
 .analysis__region-menu-item {
+  font-size: 13.5px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -531,6 +532,7 @@ template {
   max-height: 400px;
 }
 .analysis__options-menu-item {
+  font-size: 13.5px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -548,6 +550,7 @@ template {
   color: #fff;
 }
 .analysis__options-menu-item_recommends {
+  font-size: 13.5px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -570,6 +573,7 @@ template {
   background-color: rgb(147, 14, 255);
 }
 .analysis__options-menu-item_blocked {
+  font-size: 13.5px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
