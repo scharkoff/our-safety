@@ -219,7 +219,7 @@ function count_dispersion($query) {
     $dispersions = array();
 
 
-    // -- Count total sum and count of the statistical factor
+    // -- Count total sum of the statistical factor
     while ($row = mysqli_fetch_assoc($query)) {
         if ($row["subject"] != "Всего по России") {  
             if (isset($total_sum_of_the_statistical_factors[$row["name_of_the_statistical_factor"]])) {
