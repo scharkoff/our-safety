@@ -492,7 +492,7 @@ template {
   max-height: 800px;
 }
 .analysis__region-menu-item {
-  font-size: 12.5px;
+  font-size: 12px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -511,6 +511,7 @@ template {
 }
 .analysis__region-menu-item_active {
   cursor: pointer;
+  font-size: 12px;
   margin: 10px 0;
   padding: 5px 0;
   border: 1px solid rgb(0, 140, 255);
@@ -532,7 +533,7 @@ template {
   max-height: 400px;
 }
 .analysis__options-menu-item {
-  font-size: 12.5px;
+  font-size: 12px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -550,7 +551,7 @@ template {
   color: #fff;
 }
 .analysis__options-menu-item_recommends {
-  font-size: 12.5px;
+  font-size: 12px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -573,7 +574,7 @@ template {
   background-color: rgb(147, 14, 255);
 }
 .analysis__options-menu-item_blocked {
-  font-size: 12.5px;
+  font-size: 12px;
   cursor: pointer;
   margin: 10px 0;
   padding: 5px 0;
@@ -598,6 +599,7 @@ template {
 }
 .analysis__options-menu-item_active {
   cursor: pointer;
+  font-size: 12px;
   margin: 10px 0;
   padding: 5px 0;
   border: 1px solid rgb(0, 140, 255);

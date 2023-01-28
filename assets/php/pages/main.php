@@ -447,20 +447,20 @@ require("../utils/regions.php");
         }]
     };
 
-    // -- Setup data for dispersion chart
+    // -- Setup data for standard_deviation chart
     const dispersionData = {
         labels: <?php 
                 
                 if (isset($_GET["option"])) {
 
                     if ($_GET["option"] == "causes_of_crimes") {
-                        $dispersion = count_dispersion($causes_of_crimes);
-                        echo json_encode(array_keys($dispersion));
+                        $standard_deviation = count_standard_deviation($causes_of_crimes);
+                        echo json_encode(array_keys($standard_deviation));
                     } 
                     
                     else if ($_GET["option"] == "articles") {
-                         $dispersion = count_dispersion($crime_articles);
-                        $keys = array_keys($dispersion);
+                         $standard_deviation = count_standard_deviation($crime_articles);
+                        $keys = array_keys($standard_deviation);
                         foreach ($keys as $key => $value) {
                             if (strpos($value, "зарегистрированных")) {
                                 $keys[$key] = str_replace("Количество преступлений, зарегистрированных в отчетном периоде по", "(Зарегистрированных)", $value);
@@ -474,8 +474,8 @@ require("../utils/regions.php");
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_dispersion($number_of_victims);
-                        echo json_encode(array_keys($dispersion));
+                        $standard_deviation = count_standard_deviation($number_of_victims);
+                        echo json_encode(array_keys($standard_deviation));
                     } 
                     
                     else {
@@ -496,18 +496,18 @@ require("../utils/regions.php");
                 if (isset($_GET["option"])) {
 
                     if ($_GET["option"] == "causes_of_crimes") {
-                        $dispersion = count_dispersion($causes_of_crimes);
-                        echo json_encode(array_values($dispersion));
+                        $standard_deviation = count_standard_deviation($causes_of_crimes);
+                        echo json_encode(array_values($standard_deviation));
                     } 
 
                     else if ($_GET["option"] == "articles") {
-                        $dispersion = count_dispersion($crime_articles);
-                        echo json_encode(array_values($dispersion));  
+                        $standard_deviation = count_standard_deviation($crime_articles);
+                        echo json_encode(array_values($standard_deviation));  
                     }
 
                     else if ($_GET["option"] == "victims") {
-                        $dispersion = count_dispersion($number_of_victims);
-                        echo json_encode(array_values($dispersion));
+                        $standard_deviation = count_standard_deviation($number_of_victims);
+                        echo json_encode(array_values($standard_deviation));
                     } 
                     
                     else {

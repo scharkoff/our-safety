@@ -200,7 +200,7 @@ function count_percent_values($region, $query) {
 
 
 // -- Dispersion of the statistical factor
-function count_dispersion($query) {
+function count_standard_deviation($query) {
     $result = array();
 
     global $connect;
@@ -216,7 +216,7 @@ function count_dispersion($query) {
     $total_sum_of_the_statistical_factors = array();
     $average_of_the_statistical_factors = array();
     
-    $dispersions = array();
+    $standard_deviations = array();
 
 
     // -- Count total sum of the statistical factor
@@ -238,7 +238,7 @@ function count_dispersion($query) {
     // -- Return arrow to start of query string result
     mysqli_data_seek($query, 0);
 
-    // -- Count dispersion for each statistical factor
+    // -- Count standard_deviation for each statistical factor
     $numerators = array();
     $result = 0;
     while ($row = mysqli_fetch_assoc($query)) {
@@ -248,7 +248,7 @@ function count_dispersion($query) {
                     if (isset($numerators[$key])) {
                         $numerators[$key] += pow($row["importance_of_the_statistical_factor"] - $value, 2);
                         $result = sqrt($numerators[$key] / (count($regions) - 1));
-                        $dispersions[$key] = round($result, 2);
+                        $standard_deviations[$key] = round($result, 2);
                     } else {
                         $numerators[$key] = pow($row["importance_of_the_statistical_factor"] - $value, 2);
                     }
@@ -259,7 +259,7 @@ function count_dispersion($query) {
         }
     }
 
-    return $dispersions;
+    return $standard_deviations;
 }
 
 
