@@ -1,5 +1,7 @@
 <?php 
 
+namespace Utils;
+
 require("config.php");
 require("querys.php");
 require("regions.php");
